@@ -21,8 +21,8 @@ const router = createRouter({
       ],
     },
     {
-      path: '/author',
-      name: 'author',
+      path: '/authors',
+      name: 'authors',
       component: AuthorView,
     },
     {
