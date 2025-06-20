@@ -7,10 +7,6 @@ const notifs = useNotificationStore()
 </script>
 
 <template>
-    <button @click="notifs.newNotification(`success`, Status.success)" class="button">ADD SUCCESS NOTIFICATION</button>
-    <button @click="notifs.newNotification(`info`, Status.info)" class="button">ADD INFO NOTIFICATION</button>
-    <button @click="notifs.newNotification(`danger`, Status.danger)" class="button">ADD DANGER NOTIFICATION</button>
-    <button @click="notifs.newNotification(`warning`, Status.warning)" class="button">ADD WARNING NOTIFICATION</button>
     <div id="notif">
         <div v-for="notif in notifs.Notifs">
             <div key="Math.random()">
