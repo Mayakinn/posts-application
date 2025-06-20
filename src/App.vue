@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { useNotificationStore } from './store/NotificationStore'
+import Notification from './components/pageComponents/Notification.vue'
+const message = useNotificationStore()
+
+
+
 </script>
 
 <template>
@@ -13,11 +19,12 @@ import { RouterLink, RouterView } from 'vue-router'
           </div>
           <div class="navbar-end">
             <a class="navbar-item"><RouterLink to="/login">Login</RouterLink></a>
-          </div>
+          </div>          
         </div>
       </nav>
     </div>
   </header>
 
   <RouterView />
+  <Notification />
 </template>
