@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import { useNotificationStore } from './store/NotificationStore'
 import Notification from './components/pageComponents/Notification.vue'
-const message = useNotificationStore()
+import { ref } from 'vue'
+import type { Author } from './typings/interface/Author'
+import { getAuthors } from './api/AuthorService'
 
 
 
