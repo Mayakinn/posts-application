@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import type { Post } from "@/typings/interface/Post";
+import { useRouter } from "vue-router";
 
 const props = defineProps<{
   post: Post;
 }>();
+
+const router = useRouter();
 </script>
 <template>
-  <div class="card" @click="() => console.log('going to post')">
+  <div
+    class="card"
+    @click="router.push({ name: 'post', params: { id: post.id } })"
+  >
     <header class="card-header">
       <p class="card-header-title">{{ post.title }}</p>
     </header>
