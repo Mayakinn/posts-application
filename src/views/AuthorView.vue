@@ -8,14 +8,18 @@ const loading = ref<boolean>(true);
 const authors = ref<Author[]>([]);
 
 onMounted(async () => {
-  authors.value = await getAuthors();
+  await getAuthors().then(function (response) {
+    loading.value = false;
+    authors.value = response;
+  });
 });
 </script>
 
 <template>
   <div class="Author">
     <h1>This is an Author page</h1>
-    <AuthorList :Authors="authors" />
+    <div v-if="loading">Loading author information</div>
+    <div v-else><AuthorList :Authors="authors" /></div>
   </div>
 </template>
 

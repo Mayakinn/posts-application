@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import Notification from './components/pageComponents/Notification.vue'
-import { ref } from 'vue'
-import type { Author } from './typings/interface/Author'
-import { getAuthors } from './api/AuthorService'
-
-
-
+import { RouterLink, RouterView } from "vue-router";
+import Notification from "./components/pageComponents/Notification.vue";
 </script>
 
 <template>
@@ -16,11 +10,15 @@ import { getAuthors } from './api/AuthorService'
         <div class="navbar-menu">
           <div class="navbar-start">
             <a class="navbar-item"><RouterLink to="/">Posts</RouterLink></a>
-            <a class="navbar-item"><RouterLink to="/authors">Authors</RouterLink></a>
+            <a class="navbar-item"
+              ><RouterLink to="/authors">Authors</RouterLink></a
+            >
           </div>
           <div class="navbar-end">
-            <a class="navbar-item"><RouterLink to="/login">Login</RouterLink></a>
-          </div>          
+            <a class="navbar-item"
+              ><RouterLink to="/login">Login</RouterLink></a
+            >
+          </div>
         </div>
       </nav>
     </div>
