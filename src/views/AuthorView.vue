@@ -17,8 +17,7 @@ onMounted(async () => {
 
 <template>
   <div class="Author">
-    <h1>This is an Author page</h1>
-    <div v-if="loading">Loading author information</div>
+    <div v-if="loading" class="title">Loading author information</div>
     <div v-else><AuthorList :Authors="authors" /></div>
   </div>
 </template>
