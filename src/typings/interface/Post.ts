@@ -1,4 +1,4 @@
-interface Post {
+export interface Post {
     id: number;
     title: string;
     body: string;
@@ -8,4 +8,3 @@ interface Post {
     updated_at: Date;
 }
 
-export default Post;
