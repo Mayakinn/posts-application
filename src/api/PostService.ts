@@ -1,22 +1,27 @@
 import Axios from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
-import { Status } from "@/typings/interface/Status";
+import { NotificationType } from "@/typings/interface/NotificationType";
+
+const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
 const getPosts = async () => {
   const notif = useNotificationStore();
   try {
-    const response = await Axios.get("http://localhost:3000/posts");
+    const response = await Axios.get(`${DB_URL}/posts`);
     const data = response.data;
     if (!data) {
-      notif.newNotification("The post list is empty", Status.danger);
+      notif.newNotification("The post list is empty", NotificationType.danger);
       return;
     }
-    notif.newNotification("Succesfully fetched post data", Status.success);
+    notif.newNotification(
+      "Succesfully fetched post data",
+      NotificationType.success
+    );
     return data;
   } catch (error) {
     notif.newNotification(
       `Failed to fetch post data : ${error}`,
-      Status.danger
+      NotificationType.danger
     );
   }
 };

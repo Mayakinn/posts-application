@@ -12,7 +12,8 @@ const props = defineProps<{
     </header>
     <div class="card-content">
       <p>
-        Created at: {{ new Date(author.created_at).toLocaleString() }} <br />
+        Created/Last updated:
+        {{ new Date(author.created_at).toLocaleString() }} <br />
       </p>
     </div>
     <footer class="card-footer">

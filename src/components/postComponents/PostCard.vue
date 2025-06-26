@@ -13,8 +13,8 @@ const props = defineProps<{
     <div class="card-content">
       <div class="content">{{ post.body }}</div>
       <p>
-        Created at: {{ new Date(post.created_at).toLocaleString() }} <br />
-        Updated at: {{ new Date(post.updated_at).toLocaleString() }} <br />
+        Created/Last updated at:
+        {{ new Date(post.created_at).toLocaleString() }} <br />
       </p>
     </div>
     <footer class="card-footer">
