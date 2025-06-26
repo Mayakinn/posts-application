@@ -1,4 +1,4 @@
-interface Author {
+export interface Author {
   id: number;
   userId: number;
   name: string;
@@ -6,4 +6,3 @@ interface Author {
   created_at: Date;
   updated_at: Date;
 }
-export default Author;
