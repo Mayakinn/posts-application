@@ -2,7 +2,8 @@
 import PostList from "@/components/postComponents/PostList.vue";
 import { getPosts } from "@/api/PostService";
 import { type Post } from "@/typings/interface/Post";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import Pagination from "@/components/pageComponents/Pagination.vue";
 
 const loading = ref<boolean>(true);
 const posts = ref<Post[]>([]);
@@ -23,6 +24,20 @@ onMounted(async () => {
   <div class="post">
     <div v-if="loading" class="title">Loading posts information</div>
     <div v-else-if="empty" class="title">Post list is empty</div>
-    <div v-else><PostList :Posts="posts" /></div>
+    <div v-else>
+      <PostList :Posts="posts" />
+      <div class="buttons is-centered mx-5 my-3">
+        <!--<button
+          class="button"
+          v-for="page in totalPages"
+          :key="page"
+          :class="{ 'is-primary': currentPage === page }"
+          @click="currentPage = page"
+        >
+          {{ page }}
+        </button>-->
+        <Pagination :data="posts" />
+      </div>
+    </div>
   </div>
 </template>

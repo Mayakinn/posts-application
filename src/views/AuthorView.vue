@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { type Author } from "@/typings/interface/Author";
 import { getAuthors } from "@/api/AuthorService";
 import AuthorList from "@/components/authorComponents/AuthorList.vue";
+import Pagination from "@/components/pageComponents/Pagination.vue";
 
 const loading = ref<boolean>(true);
 const empty = ref<boolean>(false);
@@ -23,7 +24,10 @@ onMounted(async () => {
   <div class="Author">
     <div v-if="loading" class="title">Loading author information</div>
     <div v-else-if="empty" class="title">Author list is empty</div>
-    <div v-else><AuthorList :Authors="authors" /></div>
+    <div v-else>
+      <AuthorList :Authors="authors" />
+      <Pagination :data="authors" />
+    </div>
   </div>
 </template>
 
