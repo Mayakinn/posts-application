@@ -17,10 +17,12 @@ const router = useRouter();
       <p class="card-header-title">{{ post.title }}</p>
     </header>
     <div class="card-content">
-      <div class="content">{{ post.body }}</div>
+      <div class="content">
+        Author: {{ post.author.name }} {{ post.author.surname }}
+      </div>
       <p>
-        Created at: {{ new Date(post.created_at).toLocaleString() }} <br />
-        Updated at: {{ new Date(post.updated_at).toLocaleString() }} <br />
+        Created/Last updated at:
+        {{ new Date(post.created_at).toLocaleString() }} <br />
       </p>
     </div>
     <footer class="card-footer">

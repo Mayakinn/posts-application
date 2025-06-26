@@ -1,22 +1,30 @@
 import Axios from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
-import { Status } from "@/typings/interface/Status";
+import { NotificationType } from "@/typings/interface/NotificationType";
+
+const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
 const getAuthors = async () => {
   const notif = useNotificationStore();
   try {
-    const response = await Axios.get("http://localhost:3000/authors");
+    const response = await Axios.get(`${DB_URL}/authors`);
     const data = response.data;
     if (!data) {
-      notif.newNotification("The author list is empty", Status.danger);
+      notif.newNotification(
+        "The author list is empty",
+        NotificationType.danger
+      );
       return;
     }
-    notif.newNotification("Succesfully fetched Author data", Status.success);
+    notif.newNotification(
+      "Succesfully fetched Author data",
+      NotificationType.success
+    );
     return data;
   } catch (error) {
     notif.newNotification(
       `Failed to fetch author data : ${error}`,
-      Status.danger
+      NotificationType.danger
     );
   }
 };
