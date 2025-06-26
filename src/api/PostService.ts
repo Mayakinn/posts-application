@@ -7,8 +7,9 @@ const DB_URL = import.meta.env.VITE_JSON_SERVER;
 const getPosts = async () => {
   const notif = useNotificationStore();
   try {
-    const response = await Axios.get(`${DB_URL}/posts`);
+    const response = await Axios.get(`${DB_URL}/posts?_expand=author`);
     const data = response.data;
+    console.log(data);
     if (!data) {
       notif.newNotification("The post list is empty", NotificationType.danger);
       return;

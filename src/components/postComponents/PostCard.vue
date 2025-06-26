@@ -11,7 +11,9 @@ const props = defineProps<{
       <p class="card-header-title">{{ post.title }}</p>
     </header>
     <div class="card-content">
-      <div class="content">{{ post.body }}</div>
+      <div class="content">
+        Author: {{ post.author.name }} {{ post.author.surname }}
+      </div>
       <p>
         Created/Last updated at:
         {{ new Date(post.created_at).toLocaleString() }} <br />
