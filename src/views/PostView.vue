@@ -11,25 +11,29 @@ const empty = ref<boolean>(false);
 const singlePost = ref<Post>();
 
 const handleBackClick = () => {
-  router.go(-1);
+  router.push("/");
 };
 
 onMounted(async () => {
-  const id = route.params.id as string;
-  try {
-    const response = await getPost(id);
-    singlePost.value = response;
-    empty.value = !response;
-  } finally {
+  await getPost(route.params.id as string).then(function (response) {
     loading.value = false;
-  }
+    singlePost.value = response;
+    if (singlePost.value == undefined) {
+      empty.value = true;
+    }
+  });
 });
 </script>
 
 <template>
   <button @click="handleBackClick()" class="button is-primary">
-    < Go back
+    < Go back to list
   </button>
-  <PostCard v-if="singlePost" :post="singlePost" />
-  <div v-else>Loading.....</div>
+  <div style="max-width: 1000px; margin: 0 auto" class="columns">
+    <div class="is-full">
+      <div v-if="singlePost"><PostCard :post="singlePost" /></div>
+      <div v-else-if="empty">Post by this ID is not found</div>
+      <div v-else>Loading</div>
+    </div>
+  </div>
 </template>
