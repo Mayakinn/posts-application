@@ -1,6 +1,7 @@
-import type { Status } from "./Status";
+import type { NotificationType } from "./NotificationType";
 
 export interface Notification {
-    message: string,
-    status: Status 
+  message: string;
+  status: NotificationType;
+  id: number;
 }
