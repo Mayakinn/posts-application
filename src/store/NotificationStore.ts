@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import { type Notification } from "@/typings/interface/Notification";
 
-export const useNotificationStore = defineStore("status", () => {
+export const useNotificationStore = defineStore("notification", () => {
   const idCounter = ref<number>(0);
   const Notifs = ref<Notification[]>([]);
 
