@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { Post } from "@/typings/interface/Post";
-import { useRouter } from "vue-router";
+import { computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
+const route = useRoute();
+const router = useRouter();
 
 const props = defineProps<{
   post: Post;
 }>();
 
-const router = useRouter();
+const isPostRoute = computed(() => !!route.params.id);
 </script>
 <template>
   <div
@@ -17,17 +20,18 @@ const router = useRouter();
       <p class="card-header-title">{{ post.title }}</p>
     </header>
     <div class="card-content">
-      <div class="content">
-        Author: {{ post.author.name }} {{ post.author.surname }}
-      </div>
+      Author: {{ post.author.name }} {{ post.author.surname }}
       <p>
         Created/Last updated at:
         {{ new Date(post.created_at).toLocaleString() }} <br />
       </p>
     </div>
-    <footer class="card-footer">
-      <button class="card-footer-item">Edit</button>
-      <button class="card-footer-item">Delete</button>
-    </footer>
+    <div v-if="isPostRoute">
+      <div class="card-content">{{ post.body }}</div>
+      <footer class="card-footer">
+        <button class="card-footer-item">Edit</button>
+        <button class="card-footer-item">Delete</button>
+      </footer>
+    </div>
   </div>
 </template>

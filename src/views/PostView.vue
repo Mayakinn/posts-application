@@ -1,9 +1,35 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
-import { useRoute } from "vue-router";
-defineProps<{ id: string }>();
+import PostCard from "@/components/postComponents/PostCard.vue";
+import type { Post } from "@/typings/interface/Post";
+import { onMounted, ref } from "vue";
+import { getPost } from "@/api/PostService";
+import { useRoute, useRouter } from "vue-router";
+const route = useRoute();
+const router = useRouter();
+const loading = ref<boolean>(true);
+const empty = ref<boolean>(false);
+const singlePost = ref<Post>();
+
+const handleBackClick = () => {
+  router.go(-1);
+};
+
+onMounted(async () => {
+  const id = route.params.id as string;
+  try {
+    const response = await getPost(id);
+    singlePost.value = response;
+    empty.value = !response;
+  } finally {
+    loading.value = false;
+  }
+});
 </script>
 
 <template>
-  <h2>Viewing post ID: {{ $route.params.id }}</h2>
+  <button @click="handleBackClick()" class="button is-primary">
+    < Go back
+  </button>
+  <PostCard v-if="singlePost" :post="singlePost" />
+  <div v-else>Loading.....</div>
 </template>

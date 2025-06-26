@@ -15,6 +15,29 @@ const getPosts = async () => {
       return;
     }
     notif.newNotification(
+      "Succesfully fetched posts data",
+      NotificationType.success
+    );
+    return data;
+  } catch (error) {
+    notif.newNotification(
+      `Failed to fetch posts data : ${error}`,
+      NotificationType.danger
+    );
+  }
+};
+
+const getPost = async (id: string) => {
+  const notif = useNotificationStore();
+  try {
+    const response = await Axios.get(`${DB_URL}/posts/${id}?_expand=author`);
+    const data = response.data;
+    console.log(data);
+    if (!data) {
+      notif.newNotification("The post is empty", NotificationType.danger);
+      return;
+    }
+    notif.newNotification(
       "Succesfully fetched post data",
       NotificationType.success
     );
@@ -27,4 +50,4 @@ const getPosts = async () => {
   }
 };
 
-export { getPosts };
+export { getPosts, getPost };
