@@ -5,7 +5,7 @@ import Pagination from "../pageComponents/Pagination.vue";
 import PostCard from "./PostCard.vue";
 import { useRoute } from "vue-router";
 const props = defineProps<{
-  Posts: Post[];
+  Posts: Post[] | undefined;
 }>();
 </script>
 

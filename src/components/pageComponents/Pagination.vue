@@ -1,37 +1,74 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { defineProps, defineEmits, ref, watch, onMounted } from "vue";
 
-const emit = defineEmits<{
-  (PaginatedData: any[]): void;
-}>();
-const props = defineProps<{
-  data: any[];
-}>();
-
-const currentPage = ref<number>(1);
-
-const itemsPerPage = 2;
-
-const totalPages = computed(() => Math.ceil(props.data.length / itemsPerPage));
-
-const paginated = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return props.data.slice(start, start + itemsPerPage);
+const props = defineProps({
+  currentPage: {
+    type: Number,
+    required: true,
+  },
+  totalItems: {
+    type: Number,
+    required: true,
+  },
 });
+
+const emit = defineEmits(["page-change"]);
+
+const pages = ref<number[]>([]);
+
+const calculatePages = () => {
+  const totalPages = Math.ceil(props.totalItems / 3);
+  console.log(`${props.currentPage}, GOOD PAGES`);
+
+  pages.value = [];
+  const startPage = Math.max(1, props.currentPage - 5);
+  const endPage = Math.min(props.currentPage + 5, totalPages);
+
+  for (let i = startPage; i <= endPage; i++) {
+    pages.value.push(i);
+  }
+};
+
+onMounted(() => {
+  calculatePages();
+});
+
+watch([() => props.currentPage, () => props.totalItems], () => {
+  calculatePages();
+});
+
+const changePage = (page: number) => {
+  console.log("emitted");
+  emit("page-change", page);
+};
 </script>
 
 <template>
-  <button
-    class="button"
-    v-for="page in totalPages"
-    :key="page"
-    :class="{ 'is-primary': currentPage === page }"
-    @click="
-      ((currentPage = page),
-      $emit('PaginatedData', paginated),
-      console.log('meow meow emitted'))
-    "
-  >
-    {{ page }}
-  </button>
+  <div>
+    <button
+      class="button"
+      :disabled="props.currentPage === 1"
+      @click="changePage(props.currentPage - 1)"
+    >
+      Previous
+    </button>
+
+    <span v-for="page in pages" :key="page">
+      <button
+        class="button"
+        :class="{ 'button is-primary': page === props.currentPage }"
+        @click="changePage(page)"
+      >
+        {{ page }}
+      </button>
+    </span>
+
+    <button
+      class="button"
+      :disabled="props.currentPage === Math.ceil(props.totalItems / 3)"
+      @click="changePage(props.currentPage + 1)"
+    >
+      Next
+    </button>
+  </div>
 </template>

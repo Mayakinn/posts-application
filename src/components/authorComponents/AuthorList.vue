@@ -3,7 +3,7 @@ import type { Author } from "../../typings/interface/Author";
 import AuthorCard from "./AuthorCard.vue";
 
 const props = defineProps<{
-  Authors: Author[];
+  Authors: Author[] | undefined;
 }>();
 </script>
 
