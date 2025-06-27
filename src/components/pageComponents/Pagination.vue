@@ -22,8 +22,6 @@ const pages = ref<number[]>([]);
 
 const calculatePages = () => {
   const totalPages = Math.ceil(props.totalItems / props.itemsPerPage);
-  console.log(`${props.currentPage}, GOOD PAGES`);
-
   pages.value = [];
   const startPage = Math.max(1, props.currentPage - 5);
   const endPage = Math.min(props.currentPage + 5, totalPages);
@@ -42,7 +40,6 @@ watch([() => props.currentPage, () => props.totalItems], () => {
 });
 
 const changePage = (page: number) => {
-  console.log("emitted");
   emit("page-change", page);
 };
 </script>
