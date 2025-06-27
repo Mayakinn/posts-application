@@ -10,6 +10,7 @@ const empty = ref<boolean>(false);
 const authors = ref<[Author[], number] | undefined>(undefined);
 const totalItems = ref(0);
 const currentPage = ref(1);
+const itemsPerPage = ref(3);
 
 const fetchAuthors = async (newPage: number) => {
   currentPage.value = newPage;
@@ -38,6 +39,7 @@ onMounted(async () => {
         <Pagination
           :currentPage="currentPage"
           :totalItems="totalItems"
+          :itemsPerPage="itemsPerPage"
           @page-change="fetchAuthors"
         />
       </div>

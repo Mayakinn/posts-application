@@ -10,10 +10,11 @@ const posts = ref<[Post[], number] | undefined>(undefined);
 const empty = ref<boolean>(false);
 const totalItems = ref(0);
 const currentPage = ref(1);
+const itemsPerPage = ref(10);
 
 const fetchPosts = async (newPage: number) => {
   currentPage.value = newPage;
-  const response = await getPosts(currentPage.value);
+  const response = await getPosts(currentPage.value, itemsPerPage.value);
   if (response) {
     posts.value = response;
     totalItems.value = response[1];
@@ -38,6 +39,7 @@ onMounted(async () => {
         <Pagination
           :currentPage="currentPage"
           :totalItems="totalItems"
+          :itemsPerPage="itemsPerPage"
           @page-change="fetchPosts"
         />
       </div>

@@ -10,6 +10,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  itemsPerPage: {
+    type: Number,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["page-change"]);
@@ -17,7 +21,7 @@ const emit = defineEmits(["page-change"]);
 const pages = ref<number[]>([]);
 
 const calculatePages = () => {
-  const totalPages = Math.ceil(props.totalItems / 3);
+  const totalPages = Math.ceil(props.totalItems / props.itemsPerPage);
   console.log(`${props.currentPage}, GOOD PAGES`);
 
   pages.value = [];
@@ -65,7 +69,9 @@ const changePage = (page: number) => {
 
     <button
       class="button"
-      :disabled="props.currentPage === Math.ceil(props.totalItems / 3)"
+      :disabled="
+        props.currentPage === Math.ceil(props.totalItems / props.itemsPerPage)
+      "
       @click="changePage(props.currentPage + 1)"
     >
       Next

@@ -5,11 +5,14 @@ import type { Post } from "@/typings/interface/Post";
 
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
-const getPosts = async (page = 1): Promise<[Post[], number] | undefined> => {
+const getPosts = async (
+  page = 1,
+  itemsPerPage = 3
+): Promise<[Post[], number] | undefined> => {
   const notif = useNotificationStore();
   try {
     const response = await Axios.get(
-      `${DB_URL}/posts?_expand=author&_page=${page}&_limit=3`
+      `${DB_URL}/posts?_expand=author&_page=${page}&_limit=${itemsPerPage}`
     );
     const data: Post[] = response.data;
 
