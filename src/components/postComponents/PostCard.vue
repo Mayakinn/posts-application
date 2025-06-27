@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import type { Post } from "@/typings/interface/Post";
 import { computed } from "vue";
-import { useRouter, useRoute } from "vue-router";
-const route = useRoute();
-const router = useRouter();
 
 const props = defineProps<{
   post: Post;
 }>();
 
-const isPostRoute = computed(() => !!route.params.id);
+const createdOrUpdatedDate = computed(() => {
+  return new Date(props.post.created_at) >= new Date(props.post.updated_at)
+    ? `Created at: ${new Date(props.post.created_at).toLocaleString()}`
+    : `Last update at: ${new Date(props.post.updated_at).toLocaleString()}`;
+});
 </script>
 <template>
   <div
@@ -20,11 +21,10 @@ const isPostRoute = computed(() => !!route.params.id);
       <p class="card-header-title">{{ post.title }}</p>
     </header>
     <div class="card-content">
-      Author: {{ post.author.name }} {{ post.author.surname }}
-      <p>
-        Created/Last updated at:
-        {{ new Date(post.created_at).toLocaleString() }} <br />
-      </p>
+      <div class="content">
+        Author: {{ post.author.name }} {{ post.author.surname }}
+      </div>
+      <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
     <div v-if="isPostRoute">
       <div class="card-content">{{ post.body }}</div>

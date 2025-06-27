@@ -9,7 +9,6 @@ const getPosts = async () => {
   try {
     const response = await Axios.get(`${DB_URL}/posts?_expand=author`);
     const data = response.data;
-    console.log(data);
     if (!data) {
       notif.newNotification("The post list is empty", NotificationType.danger);
       return;
