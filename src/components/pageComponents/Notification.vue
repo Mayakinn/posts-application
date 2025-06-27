@@ -6,26 +6,6 @@ const notifs = useNotificationStore();
 </script>
 
 <template>
-  <button
-    @click="
-      notifs.newNotification(
-        'hello this is a red notification and very cool one at that too yes i do enjoy this one very much',
-        NotificationType.danger
-      )
-    "
-  >
-    press for red notif
-  </button>
-  <button
-    @click="
-      notifs.newNotification(
-        'hello this is a red notification and very cool one at that too yes i do enjoy this one very much',
-        NotificationType.success
-      )
-    "
-  >
-    press for red notif
-  </button>
   <div id="notif">
     <div v-for="notif in notifs.Notifs" key="notif.id">
       <div
