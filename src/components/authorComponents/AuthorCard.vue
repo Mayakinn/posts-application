@@ -6,10 +6,6 @@ const props = defineProps<{
   author: Author;
 }>();
 
-console.log(
-  new Date(props.author.created_at) > new Date(props.author.updated_at)
-);
-
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.author.created_at) >= new Date(props.author.updated_at)
     ? `Created at: ${new Date(props.author.created_at).toLocaleString()}`
