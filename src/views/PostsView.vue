@@ -4,6 +4,7 @@ import { getPosts } from "@/api/PostService";
 import { type Post } from "@/typings/interface/Post";
 import { ref, onMounted, computed } from "vue";
 import Pagination from "@/components/pageComponents/Pagination.vue";
+import SearchBar from "@/components/pageComponents/SearchBar.vue";
 
 const loading = ref<boolean>(true);
 const posts = ref<[Post[], number] | undefined>(undefined);
@@ -30,6 +31,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <SearchBar />
   <div class="post">
     <div v-if="loading" class="title">Loading posts information</div>
     <div v-else-if="empty" class="title">Post list is empty</div>

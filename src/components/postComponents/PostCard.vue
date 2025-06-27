@@ -1,10 +1,18 @@
 <script setup lang="ts">
 import type { Post } from "@/typings/interface/Post";
 import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps<{
   post: Post;
 }>();
+
+const router = useRouter();
+const route = useRoute();
+
+const isPostRoute = computed(() => {
+  return route.name === "post" && route.params.id === String(props.post.id);
+});
 
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.post.created_at) >= new Date(props.post.updated_at)

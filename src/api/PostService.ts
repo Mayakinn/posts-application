@@ -17,7 +17,6 @@ const getPosts = async (
     const data: Post[] = response.data;
 
     const totalItems: number = parseInt(response.headers["x-total-count"], 10);
-    console.log(data);
     if (!data || data.length == 0) {
       notif.newNotification("The post list is empty", NotificationType.danger);
       return undefined;
