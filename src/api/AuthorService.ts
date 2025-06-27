@@ -6,12 +6,13 @@ import type { Author } from "@/typings/interface/Author";
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
 const getAuthors = async (
-  page = 1
+  page = 1,
+  itemsperPage = 3
 ): Promise<[Author[], number] | undefined> => {
   const notif = useNotificationStore();
   try {
     const response = await Axios.get(
-      `${DB_URL}/authors?_page=${page}&_limit=3`
+      `${DB_URL}/authors?_page=${page}&_limit=${itemsperPage}`
     );
     const data: Author[] = response.data;
 

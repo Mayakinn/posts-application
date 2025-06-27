@@ -14,7 +14,7 @@ const itemsPerPage = ref(3);
 
 const fetchAuthors = async (newPage: number) => {
   currentPage.value = newPage;
-  const response = await getAuthors(currentPage.value);
+  const response = await getAuthors(currentPage.value, itemsPerPage.value);
   if (response) {
     authors.value = response;
     totalItems.value = response[1];
