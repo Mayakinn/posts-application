@@ -4,29 +4,26 @@ import { NotificationType } from "@/typings/interface/NotificationType";
 
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
-const getAuthors = async () => {
+const getPosts = async () => {
   const notif = useNotificationStore();
   try {
-    const response = await Axios.get(`${DB_URL}/authors`);
+    const response = await Axios.get(`${DB_URL}/posts?_expand=author`);
     const data = response.data;
     if (!data) {
-      notif.newNotification(
-        "The author list is empty",
-        NotificationType.danger
-      );
+      notif.newNotification("The post list is empty", NotificationType.danger);
       return;
     }
     notif.newNotification(
-      "Succesfully fetched Author data",
+      "Succesfully fetched post data",
       NotificationType.success
     );
     return data;
   } catch (error) {
     notif.newNotification(
-      `Failed to fetch author data : ${error}`,
+      `Failed to fetch post data : ${error}`,
       NotificationType.danger
     );
   }
 };
 
-export { getAuthors };
+export { getPosts };

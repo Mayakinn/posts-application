@@ -12,7 +12,6 @@ const message = useNotificationStore();
       <Navbar />
     </div>
   </header>
-
   <RouterView />
   <Notification />
 </template>
