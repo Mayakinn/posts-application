@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import type { Author } from "@/typings/interface/Author";
+import { computed } from "vue";
 
 const props = defineProps<{
   author: Author;
 }>();
+
+console.log(
+  new Date(props.author.created_at) > new Date(props.author.updated_at)
+);
+
+const createdOrUpdatedDate = computed(() => {
+  return new Date(props.author.created_at) >= new Date(props.author.updated_at)
+    ? `Created at: ${new Date(props.author.created_at).toLocaleString()}`
+    : `Last update at: ${new Date(props.author.updated_at).toLocaleString()}`;
+});
 </script>
 <template>
   <div class="card">
@@ -11,9 +22,7 @@ const props = defineProps<{
       <p class="card-header-title">{{ author.name }} {{ author.surname }}</p>
     </header>
     <div class="card-content">
-      <p>
-        Created at: {{ new Date(author.created_at).toLocaleString() }} <br />
-      </p>
+      <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
     <footer class="card-footer">
       <button class="card-footer-item">Edit</button>
