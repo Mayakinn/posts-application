@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import type { Post } from "@/typings/interface/Post";
+import { computed } from "vue";
 
 const props = defineProps<{
   post: Post;
 }>();
+
+const createdOrUpdatedDate = computed(() => {
+  return new Date(props.post.created_at) >= new Date(props.post.updated_at)
+    ? `Created at: ${new Date(props.post.created_at).toLocaleString()}`
+    : `Last update at: ${new Date(props.post.updated_at).toLocaleString()}`;
+});
 </script>
 <template>
   <div class="card" @click="() => console.log('going to post')">
@@ -14,10 +21,7 @@ const props = defineProps<{
       <div class="content">
         Author: {{ post.author.name }} {{ post.author.surname }}
       </div>
-      <p>
-        Created/Last updated at:
-        {{ new Date(post.created_at).toLocaleString() }} <br />
-      </p>
+      <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
     <footer class="card-footer">
       <button class="card-footer-item">Edit</button>
