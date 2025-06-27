@@ -13,7 +13,10 @@ const createdOrUpdatedDate = computed(() => {
 });
 </script>
 <template>
-  <div class="card" @click="() => console.log('going to post')">
+  <div
+    class="card"
+    @click="router.push({ name: 'post', params: { id: post.id } })"
+  >
     <header class="card-header">
       <p class="card-header-title">{{ post.title }}</p>
     </header>
@@ -23,9 +26,12 @@ const createdOrUpdatedDate = computed(() => {
       </div>
       <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
-    <footer class="card-footer">
-      <button class="card-footer-item">Edit</button>
-      <button class="card-footer-item">Delete</button>
-    </footer>
+    <div v-if="isPostRoute">
+      <div class="card-content">{{ post.body }}</div>
+      <footer class="card-footer">
+        <button class="card-footer-item">Edit</button>
+        <button class="card-footer-item">Delete</button>
+      </footer>
+    </div>
   </div>
 </template>
