@@ -1,0 +1,13 @@
+#notif {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  width: 20rem;
+  height: 10rem;
+  padding: 30px;
+  box-sizing: border-box;
+  gap: 10px;
+}
