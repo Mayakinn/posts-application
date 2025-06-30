@@ -12,7 +12,7 @@ const empty = ref<boolean>(false);
 const totalItems = ref(0);
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
-const searchQuery = ref<string>("")
+const searchQuery = ref<string>("");
 
 async function loadData() {
   try {
@@ -31,7 +31,6 @@ async function loadData() {
 
     posts.value = postsData?.[0] || [];
     totalItems.value = postsData?.[1] || 0;
-
   } catch (error) {
     empty.value = true;
   } finally {
@@ -40,15 +39,15 @@ async function loadData() {
 }
 
 function onSearch(newQuery: string) {
-  searchQuery.value = newQuery
-  currentPage.value = 1
+  searchQuery.value = newQuery;
+  currentPage.value = 1;
 }
 
 function onPageChange(page: number) {
-  currentPage.value = page
+  currentPage.value = page;
 }
 
-watch([searchQuery, currentPage], loadData, { immediate: true })
+watch([searchQuery, currentPage], loadData, { immediate: true });
 
 onMounted(async () => {
   await loadData();
@@ -56,16 +55,19 @@ onMounted(async () => {
 </script>
 
 <template>
-  <SearchBar @query-change="onSearch" :currentSearchTerm="searchQuery" />
+  <SearchBar @query-change="onSearch" />
   <div class="post">
     <div v-if="loading" class="title">Loading posts information</div>
     <div v-else-if="empty" class="title">Post list is empty</div>
     <div v-else>
       <PostList :Posts="posts" />
       <div class="buttons is-centered mx-5 my-3">
-        <Pagination :currentPage="currentPage" :totalItems="totalItems" :itemsPerPage="itemsPerPage"
-          @page-change="onPageChange" />
-
+        <Pagination
+          :currentPage="currentPage"
+          :totalItems="totalItems"
+          :itemsPerPage="itemsPerPage"
+          @page-change="onPageChange"
+        />
       </div>
     </div>
   </div>
