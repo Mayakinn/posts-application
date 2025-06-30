@@ -9,13 +9,10 @@ const props = defineProps<{
 }>();
 
 const isLoggedIn = ref(false);
+const isPostRoute = ref(false);
 
 const router = useRouter();
 const route = useRoute();
-
-const isPostRoute = computed(() => {
-  return route.name === "post" && route.params.id === String(props.post.id);
-});
 
 const canEdit = computed(() => {
   return isPostRoute.value && isLoggedIn.value;
@@ -28,7 +25,12 @@ const createdOrUpdatedDate = computed(() => {
 });
 
 onMounted(async () => {
-  isLoggedIn.value = await validateToken();
+  isPostRoute.value =
+    route.name === "post" && route.params.id === String(props.post.id);
+
+  if (isPostRoute) {
+    isLoggedIn.value = await validateToken();
+  }
 });
 </script>
 <template>
@@ -45,8 +47,9 @@ onMounted(async () => {
       </div>
       <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
+    <div v-if="isPostRoute" class="card-content">{{ post.body }}</div>
+
     <div v-if="canEdit">
-      <div class="card-content">{{ post.body }}</div>
       <footer class="card-footer">
         <button class="card-footer-item">Edit</button>
         <button class="card-footer-item">Delete</button>

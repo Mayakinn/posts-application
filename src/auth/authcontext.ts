@@ -34,7 +34,7 @@ const isLoggedIn = () => {
 
 function logOutUser() {
   localStorage.removeItem("token");
-  localStorage.removeItem("userId");
+  localStorage.removeItem("name");
   router.go(0);
 }
 

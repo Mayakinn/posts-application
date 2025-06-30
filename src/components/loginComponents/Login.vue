@@ -10,7 +10,7 @@ async function loginUser() {
   const response = await login(email.value, password.value);
   console.log(response);
   localStorage.setItem("token", response.accessToken);
-  localStorage.setItem("userId", response.user.id);
+  localStorage.setItem("name", response.user.name);
   router.push({ name: "posts" });
 }
 </script>
