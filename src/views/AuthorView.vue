@@ -47,7 +47,7 @@ function onPageChange(page: number) {
   currentPage.value = page;
 }
 
-watch([searchQuery, currentPage], loadData, { immediate: true });
+watch([searchQuery, currentPage], loadData);
 
 onMounted(async () => {
   await loadData();
