@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import { validateToken } from "@/auth/authcontext";
 import type { Post } from "@/typings/interface/Post";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps<{
   post: Post;
 }>();
+
+const isLoggedIn = ref(false);
 
 const router = useRouter();
 const route = useRoute();
@@ -14,10 +17,18 @@ const isPostRoute = computed(() => {
   return route.name === "post" && route.params.id === String(props.post.id);
 });
 
+const canEdit = computed(() => {
+  return isPostRoute.value && isLoggedIn.value;
+});
+
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.post.created_at) >= new Date(props.post.updated_at)
     ? `Created at: ${new Date(props.post.created_at).toLocaleString()}`
     : `Last update at: ${new Date(props.post.updated_at).toLocaleString()}`;
+});
+
+onMounted(async () => {
+  isLoggedIn.value = await validateToken();
 });
 </script>
 <template>
@@ -34,7 +45,7 @@ const createdOrUpdatedDate = computed(() => {
       </div>
       <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
-    <div v-if="isPostRoute">
+    <div v-if="canEdit">
       <div class="card-content">{{ post.body }}</div>
       <footer class="card-footer">
         <button class="card-footer-item">Edit</button>

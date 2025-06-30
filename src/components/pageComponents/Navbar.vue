@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import { isLoggedIn } from "@/auth/authcontext";
+import Logout from "./Logout.vue";
+</script>
+
 <template>
   <nav class="navbar" role="navigation">
     <div class="navbar-menu">
@@ -8,7 +13,10 @@
         >
       </div>
       <div class="navbar-end">
-        <a class="navbar-item"><RouterLink to="/login">Login</RouterLink></a>
+        <Logout />
+        <a v-if="isLoggedIn() == false" class="navbar-item"
+          ><RouterLink to="/login">Login</RouterLink></a
+        >
       </div>
     </div>
   </nav>
