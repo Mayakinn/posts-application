@@ -38,6 +38,10 @@ async function loadData() {
   }
 }
 
+function deleteModal(emit: number) {
+  console.log(emit);
+}
+
 function onSearch(newQuery: string) {
   searchQuery.value = newQuery;
   currentPage.value = 1;
@@ -45,6 +49,10 @@ function onSearch(newQuery: string) {
 
 function onPageChange(page: number) {
   currentPage.value = page;
+}
+
+function printCorrectID(emitted: number) {
+  console.log(emitted);
 }
 
 watch([searchQuery, currentPage], loadData);
@@ -60,7 +68,7 @@ onMounted(async () => {
     <div v-if="loading" class="title">Loading author information</div>
     <div v-else-if="empty" class="title">Author list is empty</div>
     <div v-else>
-      <AuthorList :Authors="authors" />
+      <AuthorList :Authors="authors" @delete-pressed="printCorrectID" />
       <div class="buttons is-centered mx-5 my-3">
         <Pagination
           :currentPage="currentPage"
