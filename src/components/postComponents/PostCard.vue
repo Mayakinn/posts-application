@@ -14,6 +14,8 @@ const isPostRoute = ref(false);
 const router = useRouter();
 const route = useRoute();
 
+const emit = defineEmits(["delete-pressed"]);
+
 const canEdit = computed(() => isPostRoute.value && auth.jwtToken);
 
 const createdOrUpdatedDate = computed(() => {
@@ -46,7 +48,9 @@ onMounted(async () => {
     <div v-if="canEdit">
       <footer class="card-footer">
         <button class="card-footer-item">Edit</button>
-        <button class="card-footer-item">Delete</button>
+        <button @click="() => emit('delete-pressed')" class="card-footer-item">
+          Delete
+        </button>
       </footer>
     </div>
   </div>
