@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import { isLoggedIn, logOutUser } from "@/auth/authcontext";
-import { computed, onMounted, ref, watch } from "vue";
+import { useAuthStore } from "@/store/AuthStore";
+import { ref, watch, onMounted } from "vue";
+const auth = useAuthStore();
 const user = ref<string | null>("");
-
-const loggedIn = computed(() => {
-  if (isLoggedIn()) {
-    return false;
-  } else return true;
-});
 
 onMounted(() => {
   const name = localStorage.getItem("name");
@@ -26,12 +21,12 @@ onMounted(() => {
           ><RouterLink to="/authors">Authors</RouterLink></a
         >
       </div>
-      <div v-if="loggedIn" class="navbar-end">
+      <div v-if="auth.jwtToken == null" class="navbar-end">
         <a class="navbar-item"><RouterLink to="/login">Login</RouterLink></a>
       </div>
       <div v-else class="navbar-end">
         <p class="navbar-item">Hello, {{ user }}</p>
-        <a class="navbar-item" @click="logOutUser()">Logout</a>
+        <a class="navbar-item" @click="auth.logOutUser()">Logout</a>
       </div>
     </div>
   </nav>

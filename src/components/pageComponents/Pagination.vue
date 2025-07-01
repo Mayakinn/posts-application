@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 const props = defineProps({
   currentPage: {

@@ -1,23 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { login } from "@/auth/authcontext";
-import router from "@/router";
-
+import { useAuthStore } from "@/store/AuthStore";
+const auth = useAuthStore();
 const email = ref<string>("");
 const password = ref<string>("");
-
-async function loginUser() {
-  const response = await login(email.value, password.value);
-  console.log(response);
-  localStorage.setItem("token", response.accessToken);
-  localStorage.setItem("name", response.user.name);
-  router.push({ name: "posts" });
-}
 </script>
 
 <template>
   <div class="columns is-centered" style="margin-top: 5rem">
-    <form class="box" v-on:submit.prevent="loginUser">
+    <form class="box" v-on:submit.prevent="auth.loginUser(email, password)">
       <div class="field">
         <label class="label">Email</label>
         <div class="control">
@@ -25,7 +16,7 @@ async function loginUser() {
             class="input"
             type="email"
             placeholder="e.g. name@example.com"
-            required="true"
+            required
             v-model="email"
           />
         </div>
@@ -38,7 +29,7 @@ async function loginUser() {
             class="input"
             type="password"
             placeholder="********"
-            required="true"
+            required
             v-model="password"
           />
         </div>

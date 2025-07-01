@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import { validateToken } from "@/auth/authcontext";
+import { useAuthStore } from "@/store/AuthStore";
 import type { Post } from "@/typings/interface/Post";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   post: Post;
 }>();
 
-const isLoggedIn = ref(false);
 const isPostRoute = ref(false);
-
 const router = useRouter();
 const route = useRoute();
 
-const canEdit = computed(() => {
-  return isPostRoute.value && isLoggedIn.value;
-});
+const canEdit = computed(() => isPostRoute.value && auth.jwtToken);
 
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.post.created_at) >= new Date(props.post.updated_at)
@@ -27,10 +25,6 @@ const createdOrUpdatedDate = computed(() => {
 onMounted(async () => {
   isPostRoute.value =
     route.name === "post" && route.params.id === String(props.post.id);
-
-  if (isPostRoute) {
-    isLoggedIn.value = await validateToken();
-  }
 });
 </script>
 <template>
