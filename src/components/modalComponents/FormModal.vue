@@ -1,14 +1,14 @@
 <script setup lang="ts">
 const props = defineProps<{
-  isActive: boolean;
+  isActive: Boolean;
 }>();
 
 const emit = defineEmits(["close-modal"]);
 </script>
 <template>
-  <div v-show="isActive" class="modal">
+  <div :class="['modal', { 'is-active': isActive }]">
     <div class="modal-background">
-      <div class="modal-content">
+      <div class="modal-card">
         <slot></slot>
       </div>
       <button

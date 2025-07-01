@@ -14,10 +14,10 @@ const singlePost = ref<Post>();
 const handleBackClick = () => {
   router.push("/");
 };
-const showDeleteModal = ref(false);
+const deleteModal = ref(false);
 
-const deleteModal = () => {
-  showDeleteModal.value = true;
+const showDeleteModal = () => {
+  deleteModal.value = !deleteModal.value;
 };
 onMounted(async () => {
   await getPost(route.params.id as string).then(function (response) {
@@ -35,13 +35,15 @@ onMounted(async () => {
     <button @click="handleBackClick()" class="button is-primary">
       < Go back to list
     </button>
-    <FormModal :isActive="showDeleteModal">
-      <div><p>THIS IS DELETION</p></div>
+    <FormModal :isActive="deleteModal" @close-modal="showDeleteModal">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Delete</p>
+      </header>
     </FormModal>
     <div style="max-width: 1000px; margin: 0 auto" class="columns">
       <div class="is-full">
         <div v-if="singlePost" :id="singlePost.id.toString()">
-          <PostCard :post="singlePost" @delete-pressed="deleteModal" />
+          <PostCard :post="singlePost" @delete-pressed="showDeleteModal" />
         </div>
         <div v-else-if="empty">Post by this ID is not found</div>
         <div v-else>Loading</div>
