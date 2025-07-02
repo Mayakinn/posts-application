@@ -1,15 +1,26 @@
 <script setup lang="ts">
 import type { Author } from "@/typings/interface/Author";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import { useAuthStore } from "@/store/AuthStore";
 
 const props = defineProps<{
   author: Author;
 }>();
+const isPostRoute = ref(false);
+const route = useRoute();
+const auth = useAuthStore();
 
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.author.created_at) >= new Date(props.author.updated_at)
     ? `Created at: ${new Date(props.author.created_at).toLocaleString()}`
     : `Last update at: ${new Date(props.author.updated_at).toLocaleString()}`;
+});
+
+const canEdit = computed(() => isPostRoute.value && auth.jwtToken);
+
+onMounted(async () => {
+  isPostRoute.value = route.name === "authors";
 });
 </script>
 <template>
@@ -20,9 +31,11 @@ const createdOrUpdatedDate = computed(() => {
     <div class="card-content">
       <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
-    <footer class="card-footer">
-      <button class="card-footer-item">Edit</button>
-      <button class="card-footer-item">Delete</button>
-    </footer>
+    <div v-if="canEdit">
+      <footer class="card-footer">
+        <button class="card-footer-item">Edit</button>
+        <button class="card-footer-item">Delete</button>
+      </footer>
+    </div>
   </div>
 </template>

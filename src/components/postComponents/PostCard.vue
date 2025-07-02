@@ -1,31 +1,41 @@
 <script setup lang="ts">
+import { useAuthStore } from "@/store/AuthStore";
 import type { Post } from "@/typings/interface/Post";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+
+const auth = useAuthStore();
 
 const props = defineProps<{
   post: Post;
 }>();
 
+const isPostRoute = ref(false);
 const router = useRouter();
 const route = useRoute();
 
-const isPostRoute = computed(() => {
-  return route.name === "post" && route.params.id === String(props.post.id);
-});
+const canEdit = computed(() => auth.jwtToken);
 
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.post.created_at) >= new Date(props.post.updated_at)
     ? `Created at: ${new Date(props.post.created_at).toLocaleString()}`
     : `Last update at: ${new Date(props.post.updated_at).toLocaleString()}`;
 });
+
+onMounted(async () => {
+  isPostRoute.value =
+    route.name === "post" && route.params.id === String(props.post.id);
+});
 </script>
 <template>
-  <div
-    class="card"
-    @click="router.push({ name: 'post', params: { id: post.id } })"
-  >
-    <header class="card-header">
+  <div class="card">
+    <header
+      class="card-header"
+      @click="
+        router.push({ name: 'post', params: { id: post.id } });
+        console.log('cardclicked');
+      "
+    >
       <p class="card-header-title">{{ post.title }}</p>
     </header>
     <div class="card-content">
@@ -34,11 +44,17 @@ const createdOrUpdatedDate = computed(() => {
       </div>
       <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
-    <div v-if="isPostRoute">
-      <div class="card-content">{{ post.body }}</div>
+    <div v-if="isPostRoute" class="card-content">{{ post.body }}</div>
+
+    <div v-if="canEdit">
       <footer class="card-footer">
         <button class="card-footer-item">Edit</button>
-        <button class="card-footer-item">Delete</button>
+        <button
+          @click="console.log('delete clickked')"
+          class="card-footer-item"
+        >
+          Delete
+        </button>
       </footer>
     </div>
   </div>

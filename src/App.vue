@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import { useNotificationStore } from "./store/NotificationStore";
+import { RouterView } from "vue-router";
 import Notification from "./components/pageComponents/Notification.vue";
 import Navbar from "./components/pageComponents/Navbar.vue";
-const message = useNotificationStore();
 </script>
 
 <template>
