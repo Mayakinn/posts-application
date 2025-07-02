@@ -80,8 +80,8 @@ const closeModal = () => {
   authorId.value = 0;
 };
 const closeModalAfterForm = () => {
-  formModalActive.value = false;
   loadData();
+  formModalActive.value = false;
   authorId.value = 0;
 };
 
