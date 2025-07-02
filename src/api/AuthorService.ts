@@ -43,6 +43,30 @@ const getAuthors = async (
   }
 };
 
+const getAuthorsForDropdown = async (): Promise<Author[]> => {
+  const notif = useNotificationStore();
+  try {
+    const response = await Axios.get(`${DB_URL}/authors`);
+    const data: Author[] = response.data;
+
+    if (data == null) {
+      return [];
+    }
+
+    notif.newNotification(
+      "Succesfully fetched Author data",
+      NotificationType.success
+    );
+    return data;
+  } catch (error) {
+    notif.newNotification(
+      `Failed to fetch author data : ${error}`,
+      NotificationType.danger
+    );
+    return [];
+  }
+};
+
 const deleteAuthor = async (authorId: number | string) => {
   const notif = useNotificationStore();
   const auth = useAuthStore();
@@ -171,4 +195,11 @@ const getAuthor = async (id: string | number) => {
   }
 };
 
-export { getAuthors, deleteAuthor, createAuthor, getAuthor, editAuthor };
+export {
+  getAuthors,
+  deleteAuthor,
+  createAuthor,
+  getAuthor,
+  editAuthor,
+  getAuthorsForDropdown,
+};

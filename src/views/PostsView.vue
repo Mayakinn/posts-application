@@ -2,9 +2,12 @@
 import PostList from "@/components/postComponents/PostList.vue";
 import { getPosts } from "@/api/PostService";
 import { type Post } from "@/typings/interface/Post";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, shallowRef, type Component } from "vue";
 import Pagination from "@/components/pageComponents/Pagination.vue";
 import SearchBar from "@/components/pageComponents/SearchBar.vue";
+import PostCreateForm from "@/components/formComponents/PostCreateForm.vue";
+import { useAuthStore } from "@/store/AuthStore";
+import FormModal from "@/components/modalComponents/FormModal.vue";
 
 const loading = ref<boolean>(true);
 const posts = ref<Post[]>([]);
@@ -13,6 +16,9 @@ const totalItems = ref(0);
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 const searchQuery = ref<string>("");
+const currentForm = shallowRef<Component>();
+const formModalActive = ref(false);
+const auth = useAuthStore();
 
 async function loadData() {
   try {
@@ -41,6 +47,20 @@ async function loadData() {
   }
 }
 
+function addModal() {
+  currentForm.value = PostCreateForm;
+  formModalActive.value = true;
+}
+
+const closeModal = () => {
+  formModalActive.value = false;
+};
+
+const closeModalAfterForm = () => {
+  formModalActive.value = false;
+  loadData();
+};
+
 function onSearch(newQuery: string) {
   searchQuery.value = newQuery;
   currentPage.value = 1;
@@ -59,6 +79,19 @@ onMounted(async () => {
 
 <template>
   <SearchBar @query-change="onSearch" />
+  <button
+    v-if="auth.jwtToken != null"
+    class="button is-primary"
+    @click="addModal"
+  >
+    Add a post
+  </button>
+  <FormModal :isActive="formModalActive" @close-modal="closeModal">
+    <component
+      @close-pressed="closeModalAfterForm"
+      :is="currentForm"
+    ></component>
+  </FormModal>
   <div class="post">
     <div v-if="loading" class="title">Loading posts information</div>
     <div v-else-if="empty" class="title">Post list is empty</div>
