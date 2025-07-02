@@ -3,6 +3,8 @@ import { useNotificationStore } from "@/store/NotificationStore";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import type { Author } from "@/typings/interface/Author";
 import { useAuthStore } from "@/store/AuthStore";
+import { uniqueId } from "lodash";
+import { v4 as uuidv4 } from "uuid";
 
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
@@ -41,7 +43,7 @@ const getAuthors = async (
   }
 };
 
-const deleteAuthor = async (authorId: number) => {
+const deleteAuthor = async (authorId: number | string) => {
   const notif = useNotificationStore();
   const auth = useAuthStore();
 
@@ -65,8 +67,47 @@ const deleteAuthor = async (authorId: number) => {
       `Author deletion failed. User unauthorized or session has ended. ${error} `,
       NotificationType.danger
     );
+    auth.logOutUser();
+
     return;
   }
 };
 
-export { getAuthors, deleteAuthor };
+const createAuthor = async (name: string, surname: string) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const response = await Axios.post(
+      `${DB_URL}/authors`,
+      {
+        id: uuidv4(),
+        name: name,
+        surname: surname,
+        created_at: Date.now(),
+        updated_at: Date.now(),
+      },
+      config
+    );
+    notif.newNotification(
+      "Author created succesfully",
+      NotificationType.success
+    );
+    return response.data;
+  } catch (error) {
+    notif.newNotification(
+      `Author creation failed. User unauthorized or session has ended. ${error} `,
+      NotificationType.danger
+    );
+    auth.logOutUser();
+    return;
+  }
+};
+
+export { getAuthors, deleteAuthor, createAuthor };

@@ -1,7 +1,7 @@
 import type { Author } from "./Author";
 
 export interface Post {
-  id: number;
+  id: number | string;
   title: string;
   body: string;
   authorId: number;

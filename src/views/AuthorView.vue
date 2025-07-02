@@ -7,6 +7,8 @@ import Pagination from "@/components/pageComponents/Pagination.vue";
 import SearchBar from "@/components/pageComponents/SearchBar.vue";
 import FormModal from "@/components/modalComponents/FormModal.vue";
 import AuthorDeleteForm from "@/components/formComponents/AuthorDeleteForm.vue";
+import AuthorCreateForm from "@/components/formComponents/AuthorCreateForm.vue";
+import { useAuthStore } from "@/store/AuthStore";
 
 const loading = ref<boolean>(true);
 const empty = ref<boolean>(false);
@@ -17,8 +19,8 @@ const itemsPerPage = ref(3);
 const searchQuery = ref("");
 const currentForm = shallowRef<Component>();
 const formModalActive = ref(false);
-const authorId = ref(0);
-
+const authorId = ref<number | string>(0);
+const auth = useAuthStore();
 async function loadData() {
   try {
     loading.value = true;
@@ -46,9 +48,14 @@ async function loadData() {
   }
 }
 
-function deleteModal(emit: number) {
+function deleteModal(emit: number | string) {
   authorId.value = emit;
   currentForm.value = AuthorDeleteForm;
+  formModalActive.value = true;
+}
+
+function addModal() {
+  currentForm.value = AuthorCreateForm;
   formModalActive.value = true;
 }
 
@@ -63,10 +70,12 @@ function onPageChange(page: number) {
 
 const closeModal = () => {
   formModalActive.value = false;
+  authorId.value = 0;
 };
 const closeModalAfterForm = () => {
   loadData();
   formModalActive.value = false;
+  authorId.value = 0;
 };
 
 watch([searchQuery, currentPage], loadData);
@@ -79,6 +88,14 @@ onMounted(async () => {
 <template>
   <div class="Author">
     <SearchBar @query-change="onSearch" />
+    <button
+      v-if="auth.jwtToken != null"
+      class="button is-primary"
+      @click="addModal"
+    >
+      Add an Author
+    </button>
+
     <FormModal :isActive="formModalActive" @close-modal="closeModal">
       <component
         :authorId="authorId"

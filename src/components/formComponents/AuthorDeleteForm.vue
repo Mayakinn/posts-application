@@ -2,11 +2,11 @@
 import { deleteAuthor } from "@/api/AuthorService";
 
 const props = defineProps<{
-  authorId: number;
+  authorId: number | string;
 }>();
 const emit = defineEmits(["close-pressed"]);
 
-async function handleDelete(authorId: number) {
+async function handleDelete(authorId: number | string) {
   await deleteAuthor(authorId);
   emit("close-pressed");
 }
