@@ -7,12 +7,13 @@ const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
 const getAuthors = async (
   page = 1,
-  itemsperPage = 3
+  itemsperPage = 3,
+  searchQuery = ""
 ): Promise<[Author[], number] | undefined> => {
   const notif = useNotificationStore();
   try {
     const response = await Axios.get(
-      `${DB_URL}/authors?_page=${page}&_limit=${itemsperPage}`
+      `${DB_URL}/authors?_page=${page}&_limit=${itemsperPage}&q=${searchQuery}`
     );
     const data: Author[] = response.data;
 
