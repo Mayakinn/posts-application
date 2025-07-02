@@ -12,7 +12,7 @@ const isPostRoute = ref(false);
 const route = useRoute();
 const auth = useAuthStore();
 const canEdit = computed(() => isPostRoute.value && auth.jwtToken);
-const emit = defineEmits(["delete-pressed-card", "edit-pressed"]);
+const emit = defineEmits(["delete-pressed-card", "edit-pressed-card"]);
 
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.author.created_at) >= new Date(props.author.updated_at)
@@ -35,7 +35,7 @@ onMounted(async () => {
     <div v-if="canEdit">
       <footer class="card-footer">
         <button
-          @click="() => emit('edit-pressed', author.id)"
+          @click="() => emit('edit-pressed-card', author.id)"
           class="card-footer-item"
         >
           Edit

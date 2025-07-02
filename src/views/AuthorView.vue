@@ -9,6 +9,7 @@ import FormModal from "@/components/modalComponents/FormModal.vue";
 import AuthorDeleteForm from "@/components/formComponents/AuthorDeleteForm.vue";
 import AuthorCreateForm from "@/components/formComponents/AuthorCreateForm.vue";
 import { useAuthStore } from "@/store/AuthStore";
+import AuthorEditForm from "@/components/formComponents/AuthorEditForm.vue";
 
 const loading = ref<boolean>(true);
 const empty = ref<boolean>(false);
@@ -49,14 +50,20 @@ async function loadData() {
 }
 
 function deleteModal(emit: number | string) {
-  authorId.value = emit;
   currentForm.value = AuthorDeleteForm;
   formModalActive.value = true;
+  authorId.value = emit;
 }
 
 function addModal() {
   currentForm.value = AuthorCreateForm;
   formModalActive.value = true;
+}
+
+function editModal(emit: number | string) {
+  currentForm.value = AuthorEditForm;
+  formModalActive.value = true;
+  authorId.value = emit;
 }
 
 function onSearch(newQuery: string) {
@@ -73,8 +80,8 @@ const closeModal = () => {
   authorId.value = 0;
 };
 const closeModalAfterForm = () => {
-  loadData();
   formModalActive.value = false;
+  loadData();
   authorId.value = 0;
 };
 
@@ -106,7 +113,11 @@ onMounted(async () => {
     <div v-if="loading" class="title">Loading author information</div>
     <div v-else-if="empty" class="title">Author list is empty</div>
     <div v-else>
-      <AuthorList :Authors="authors" @delete-pressed-card="deleteModal" />
+      <AuthorList
+        :Authors="authors"
+        @delete-pressed-card="deleteModal"
+        @edit-pressed-card="editModal"
+      />
       <div class="buttons is-centered mx-5 my-3">
         <Pagination
           :currentPage="currentPage"

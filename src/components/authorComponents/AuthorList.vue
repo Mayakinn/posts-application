@@ -6,10 +6,14 @@ const props = defineProps<{
   Authors: Author[] | undefined;
 }>();
 
-const emit = defineEmits(["delete-pressed-card", "edit-pressed"]);
+const emit = defineEmits(["delete-pressed-card", "edit-pressed-card"]);
 
-function deletionPressed(emitted: number) {
+function deletionPressed(emitted: number | string) {
   emit("delete-pressed-card", emitted);
+}
+
+function editPressed(emitted: number | string) {
+  emit("edit-pressed-card", emitted);
 }
 </script>
 
@@ -18,7 +22,11 @@ function deletionPressed(emitted: number) {
     <div class="columns is-multiline is-centered">
       <div class="column is-5" v-for="author in props.Authors">
         <div key="author.id">
-          <AuthorCard :author="author" @delete-pressed-card="deletionPressed" />
+          <AuthorCard
+            :author="author"
+            @delete-pressed-card="deletionPressed"
+            @edit-pressed-card="editPressed"
+          />
         </div>
       </div>
     </div>
