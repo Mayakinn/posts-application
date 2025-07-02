@@ -32,7 +32,7 @@ async function loadData() {
       searchQuery.value
     );
 
-    if (authorData?.[0]?.length === 0) {
+    if (authorData?.[1] === 0) {
       empty.value = true;
     }
 
@@ -44,6 +44,7 @@ async function loadData() {
     if (totalItems.value == 0) {
       empty.value = true;
     }
+
     loading.value = false;
   }
 }
