@@ -32,8 +32,11 @@ async function loadData() {
     posts.value = postsData?.[0] || [];
     totalItems.value = postsData?.[1] || 0;
   } catch (error) {
-    empty.value = true;
+    loading.value = false;
   } finally {
+    if (totalItems.value == 0) {
+      empty.value = true;
+    }
     loading.value = false;
   }
 }

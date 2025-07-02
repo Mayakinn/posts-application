@@ -15,11 +15,11 @@ const loading = ref<boolean>(true);
 const empty = ref<boolean>(false);
 const singlePost = ref<Post>();
 const currentForm = ref<Component>();
+const formModalActive = ref(false);
 
 const handleBackClick = () => {
   router.push("/");
 };
-const formModalActive = ref(false);
 
 const showDeleteModal = () => {
   currentForm.value = PostDeleteForm;

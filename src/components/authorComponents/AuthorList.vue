@@ -6,11 +6,10 @@ const props = defineProps<{
   Authors: Author[] | undefined;
 }>();
 
-const emit = defineEmits(["delete-pressed", "edit-pressed"]);
+const emit = defineEmits(["delete-pressed-card", "edit-pressed"]);
 
 function deletionPressed(emitted: number) {
-  console.log("listemmited", emitted);
-  emit("delete-pressed", emitted);
+  emit("delete-pressed-card", emitted);
 }
 </script>
 

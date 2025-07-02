@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, shallowRef, watch, type Component } from "vue";
 import { type Author } from "@/typings/interface/Author";
 import { getAuthors } from "@/api/AuthorService";
 import AuthorList from "@/components/authorComponents/AuthorList.vue";
 import Pagination from "@/components/pageComponents/Pagination.vue";
 import SearchBar from "@/components/pageComponents/SearchBar.vue";
+import FormModal from "@/components/modalComponents/FormModal.vue";
+import AuthorDeleteForm from "@/components/formComponents/AuthorDeleteForm.vue";
 
 const loading = ref<boolean>(true);
 const empty = ref<boolean>(false);
@@ -13,6 +15,9 @@ const totalItems = ref(0);
 const currentPage = ref(1);
 const itemsPerPage = ref(3);
 const searchQuery = ref("");
+const currentForm = shallowRef<Component>();
+const formModalActive = ref(false);
+const authorId = ref(0);
 
 async function loadData() {
   try {
@@ -32,14 +37,19 @@ async function loadData() {
     authors.value = authorData?.[0] || [];
     totalItems.value = authorData?.[1] || 0;
   } catch (error) {
-    empty.value = true;
+    loading.value = false;
   } finally {
+    if (totalItems.value == 0) {
+      empty.value = true;
+    }
     loading.value = false;
   }
 }
 
 function deleteModal(emit: number) {
-  console.log(emit);
+  authorId.value = emit;
+  currentForm.value = AuthorDeleteForm;
+  formModalActive.value = true;
 }
 
 function onSearch(newQuery: string) {
@@ -51,9 +61,13 @@ function onPageChange(page: number) {
   currentPage.value = page;
 }
 
-function printCorrectID(emitted: number) {
-  console.log(emitted);
-}
+const closeModal = () => {
+  formModalActive.value = false;
+};
+const closeModalAfterForm = () => {
+  loadData();
+  formModalActive.value = false;
+};
 
 watch([searchQuery, currentPage], loadData);
 
@@ -63,12 +77,19 @@ onMounted(async () => {
 </script>
 
 <template>
-  <SearchBar @query-change="onSearch" />
   <div class="Author">
+    <SearchBar @query-change="onSearch" />
+    <FormModal :isActive="formModalActive" @close-modal="closeModal">
+      <component
+        :authorId="authorId"
+        @close-pressed="closeModalAfterForm"
+        :is="currentForm"
+      ></component>
+    </FormModal>
     <div v-if="loading" class="title">Loading author information</div>
     <div v-else-if="empty" class="title">Author list is empty</div>
     <div v-else>
-      <AuthorList :Authors="authors" @delete-pressed="printCorrectID" />
+      <AuthorList :Authors="authors" @delete-pressed-card="deleteModal" />
       <div class="buttons is-centered mx-5 my-3">
         <Pagination
           :currentPage="currentPage"
