@@ -79,11 +79,12 @@ const closeModal = () => {
   formModalActive.value = false;
   authorId.value = 0;
 };
-const closeModalAfterForm = () => {
-  loadData();
+const closeModalAfterForm = async () => {
   formModalActive.value = false;
   authorId.value = 0;
+  await loadData();
 };
+
 
 watch([searchQuery, currentPage], loadData);
 
@@ -95,36 +96,21 @@ onMounted(async () => {
 <template>
   <div class="Author">
     <SearchBar @query-change="onSearch" />
-    <button
-      v-if="auth.jwtToken != null"
-      class="button is-primary"
-      @click="addModal"
-    >
+    <button v-if="auth.jwtToken != null" class="button is-primary" @click="addModal">
       Add an Author
     </button>
 
     <FormModal :isActive="formModalActive" @close-modal="closeModal">
-      <component
-        :authorId="authorId"
-        @close-pressed="closeModalAfterForm"
-        :is="currentForm"
-      ></component>
+      <component :authorId="authorId" @close-pressed="closeModalAfterForm" :is="currentForm"></component>
     </FormModal>
+
     <div v-if="loading" class="title">Loading author information</div>
     <div v-else-if="empty" class="title">Author list is empty</div>
     <div v-else>
-      <AuthorList
-        :Authors="authors"
-        @delete-pressed-card="deleteModal"
-        @edit-pressed-card="editModal"
-      />
+      <AuthorList :Authors="authors" @delete-pressed-card="deleteModal" @edit-pressed-card="editModal" />
       <div class="buttons is-centered mx-5 my-3">
-        <Pagination
-          :currentPage="currentPage"
-          :totalItems="totalItems"
-          :itemsPerPage="itemsPerPage"
-          @page-change="onPageChange"
-        />
+        <Pagination :currentPage="currentPage" :totalItems="totalItems" :itemsPerPage="itemsPerPage"
+          @page-change="onPageChange" />
       </div>
     </div>
   </div>
