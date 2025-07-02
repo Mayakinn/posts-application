@@ -33,7 +33,7 @@ async function loadData() {
       searchQuery.value
     );
 
-    if (authorData?.[1] == 0) {
+    if (authorData?.[1] === 0) {
       empty.value = true;
     }
 
