@@ -25,7 +25,7 @@ async function loadData() {
       searchQuery.value
     );
 
-    if (postsData?.[0]?.length === 0) {
+    if (postsData?.[1] == 0) {
       empty.value = true;
     }
 

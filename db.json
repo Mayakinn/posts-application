@@ -10,9 +10,9 @@
   "authors": [
     {
       "id": "90cfe120-ea1f-4606-8b8a-357b7306473c",
-      "name": "dasd",
+      "name": "yuppe",
       "surname": "asdadadsadadsdad",
-      "updated_at": 1751446677739
+      "updated_at": 1751458207229
     },
     {
       "id": "411a09da-b9a0-4a09-bcd8-98270e52b42e",
@@ -20,6 +20,13 @@
       "surname": "adadadasddasdadaaoa[j[sajdoa[sdadasd",
       "created_at": 1751446685292,
       "updated_at": 1751446685292
+    },
+    {
+      "id": "58d435bc-4dbe-4330-82b4-73ea3a305a16",
+      "name": "sgs",
+      "surname": "sfgsg",
+      "created_at": 1751458211496,
+      "updated_at": 1751458211496
     }
   ],
   "posts": []
