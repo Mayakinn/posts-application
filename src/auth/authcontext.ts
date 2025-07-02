@@ -24,12 +24,10 @@ const login = async (email: string, pass: string) => {
     router.push("posts");
     return data;
   } catch (error) {
-    if (Axios.isAxiosError(error)) {
-      notif.newNotification(
-        `Error: ${error.response?.data?.message || error.message}`,
-        NotificationType.danger
-      );
-    } else notif.newNotification(`Error : ${error}`, NotificationType.danger);
+    notif.newNotification(
+      `Error : Invalid email and/or password`,
+      NotificationType.danger
+    );
   }
 };
 
