@@ -17,8 +17,8 @@ async function handleEditAuthor() {
   if (authorData.value != null) {
     await editAuthor(
       props.authorId,
-      inputedName.value,
-      inputedSurname.value,
+      inputedName.value.trim(),
+      inputedSurname.value.trim(),
       authorData.value.created_at
     );
   }
