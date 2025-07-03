@@ -104,10 +104,9 @@ const createAuthor = async (name: string, surname: string) => {
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Author creation failed. User unauthorized or session has ended. ${error} `,
+      `Author creation failed. ${error} `,
       NotificationType.danger
     );
-    auth.logOutUser();
     return;
   }
 };
@@ -146,7 +145,7 @@ const editAuthor = async (
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Author changes failed. User unauthorized or session has ended. ${error} `,
+      `Author changes failed. ${error} `,
       NotificationType.danger
     );
     return;

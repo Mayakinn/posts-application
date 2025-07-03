@@ -9,7 +9,7 @@ const props = defineProps<{
 const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
 const emit = defineEmits(["close-pressed"]);
-const lengthWarning = ref<boolean>(false);
+const flag = ref<boolean>(true);
 
 const isInputed = computed(() => {
   return inputedName.value.trim() !== "" && inputedSurname.value.trim() !== "";
@@ -23,7 +23,14 @@ const surnameLettersLimit = computed(() => {
 });
 
 async function handleCreateAuthor() {
-  await createAuthor(inputedName.value.trim(), inputedSurname.value.trim());
+  const response = await createAuthor(
+    inputedName.value.trim(),
+    inputedSurname.value.trim()
+  );
+  if (response == null) {
+    emit("close-pressed", flag.value);
+    return;
+  }
   inputedName.value = "";
   inputedSurname.value = "";
   emit("close-pressed");
