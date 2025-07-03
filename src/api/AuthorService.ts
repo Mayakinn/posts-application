@@ -104,10 +104,9 @@ const createAuthor = async (name: string, surname: string) => {
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Author creation failed. User unauthorized or session has ended. ${error} `,
+      `Author creation failed. ${error} `,
       NotificationType.danger
     );
-    auth.logOutUser();
     return;
   }
 };
