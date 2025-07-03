@@ -3,7 +3,6 @@ import type { Author } from "@/typings/interface/Author";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/store/AuthStore";
-import FormModal from "../modalComponents/FormModal.vue";
 
 const props = defineProps<{
   author: Author;
@@ -34,16 +33,10 @@ onMounted(async () => {
     </div>
     <div v-if="canEdit">
       <footer class="card-footer">
-        <button
-          @click="() => emit('edit-pressed-card', author.id)"
-          class="card-footer-item"
-        >
+        <button @click="() => emit('edit-pressed-card', author.id)" class="card-footer-item">
           Edit
         </button>
-        <button
-          @click="() => emit('delete-pressed-card', author.id)"
-          class="card-footer-item"
-        >
+        <button @click="() => emit('delete-pressed-card', author.id)" class="card-footer-item">
           Delete
         </button>
       </footer>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { editAuthor, getAuthor } from "@/api/AuthorService";
 import type { Author } from "@/typings/interface/Author";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps<{
   authorId: number | string;
@@ -9,15 +9,23 @@ const props = defineProps<{
 const loading = ref<boolean>(true);
 const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
+const authorData = ref<Author>();
+
 const emit = defineEmits(["close-pressed"]);
 
 async function handleEditAuthor() {
   await editAuthor(props.authorId, inputedName.value, inputedSurname.value);
+  console.log("it passed");
   inputedName.value = "";
   inputedSurname.value = "";
   emit("close-pressed");
 }
-
+const isEdited = computed(() => {
+  return (
+    inputedName.value !== authorData.value?.name ||
+    inputedSurname.value !== authorData.value?.surname
+  );
+});
 watch(
   () => props.authorId,
   () => {
@@ -27,10 +35,10 @@ watch(
 
 async function loadData() {
   loading.value = true;
-  const authorData = await getAuthor(props.authorId).then();
-  if (authorData != null) {
-    inputedName.value = authorData.name;
-    inputedSurname.value = authorData.surname;
+  authorData.value = await getAuthor(props.authorId).then();
+  if (authorData.value != null) {
+    inputedName.value = authorData.value.name;
+    inputedSurname.value = authorData.value.surname;
   } else {
     inputedName.value = "";
     inputedSurname.value = "";
@@ -43,30 +51,35 @@ onMounted(async () => {
 </script>
 
 <template>
-  <header class="modal-card-head">
-    <p class="modal-card-title">Author Editing</p>
-  </header>
-  <div class="modal-card-body">
-    Author name:
-    <input
-      v-model="inputedName"
-      type="text"
-      class="input is-primary is-rounded"
-      required
-      style="max-width: 1000px"
-    />
-    Author surname:
-    <input
-      v-model="inputedSurname"
-      type="text"
-      class="input is-primary is-rounded"
-      required
-      style="max-width: 1000px"
-    /><br />
-  </div>
-  <footer class="modal-card-foot">
-    <button @click="handleEditAuthor" class="button is-primary">
-      Update author
-    </button>
-  </footer>
+  <form @submit.prevent="handleEditAuthor">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Author Editing</p>
+    </header>
+    <div class="modal-card-body">
+      Author name:
+      <input
+        v-model="inputedName"
+        type="text"
+        class="input is-primary is-rounded"
+        required
+        style="max-width: 1000px"
+      />
+      Author surname:
+      <input
+        v-model="inputedSurname"
+        type="text"
+        class="input is-primary is-rounded"
+        required
+        style="max-width: 1000px"
+      /><br />
+    </div>
+    <footer class="modal-card-foot">
+      <input
+        class="button"
+        type="submit"
+        value="Submit"
+        :disabled="!isEdited"
+      />
+    </footer>
+  </form>
 </template>

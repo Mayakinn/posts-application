@@ -29,6 +29,9 @@ const getAuthors = async (
       );
       return undefined;
     }
+    if (data.length == 0) {
+      return [data, totalItems];
+    }
     notif.newNotification(
       "Succesfully fetched Author data",
       NotificationType.success

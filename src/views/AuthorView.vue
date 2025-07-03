@@ -33,7 +33,7 @@ async function loadData() {
       searchQuery.value
     );
 
-    if (authorData?.[0]?.length === 0) {
+    if (authorData?.[1] === 0) {
       empty.value = true;
     }
 
@@ -45,6 +45,7 @@ async function loadData() {
     if (totalItems.value == 0) {
       empty.value = true;
     }
+
     loading.value = false;
   }
 }
@@ -79,10 +80,10 @@ const closeModal = () => {
   formModalActive.value = false;
   authorId.value = 0;
 };
-const closeModalAfterForm = () => {
+const closeModalAfterForm = async () => {
   formModalActive.value = false;
-  loadData();
   authorId.value = 0;
+  await loadData();
 };
 
 watch([searchQuery, currentPage], loadData);
@@ -93,15 +94,15 @@ onMounted(async () => {
 </script>
 
 <template>
+  <button
+    v-if="auth.jwtToken != null"
+    class="button is-primary"
+    @click="addModal"
+  >
+    Add an Author
+  </button>
   <div class="Author">
     <SearchBar @query-change="onSearch" />
-    <button
-      v-if="auth.jwtToken != null"
-      class="button is-primary"
-      @click="addModal"
-    >
-      Add an Author
-    </button>
 
     <FormModal :isActive="formModalActive" @close-modal="closeModal">
       <component
@@ -110,6 +111,7 @@ onMounted(async () => {
         :is="currentForm"
       ></component>
     </FormModal>
+
     <div v-if="loading" class="title">Loading author information</div>
     <div v-else-if="empty" class="title">Author list is empty</div>
     <div v-else>
