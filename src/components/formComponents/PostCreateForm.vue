@@ -18,12 +18,11 @@ const emit = defineEmits(["close-pressed"]);
 async function handleCreatePost() {
   if (selectedAuthor.value?.id != null) {
     await createPost(
-      inputedTitle.value,
-      inputedBody.value,
+      inputedTitle.value.trim(),
+      inputedBody.value.trim(),
       selectedAuthor.value?.id
     );
   }
-  console.log(inputedTitle.value, inputedBody.value, selectedAuthor.value?.id);
   inputedTitle.value = "";
   inputedBody.value = "";
   selectedAuthor.value = undefined;
@@ -54,13 +53,13 @@ onMounted(async () => {
         style="max-width: 1000px"
       />
       Post body:
-      <input
+      <textarea
+        class="textarea is-primary"
         v-model="inputedBody"
         type="text"
-        class="input is-primary is-rounded"
         required
         style="max-width: 1000px"
-      /><br />
+      ></textarea>
       Author:<br />
       <div class="select is-primary">
         <select required v-model="selectedAuthor">
