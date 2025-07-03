@@ -87,15 +87,15 @@ onMounted(async () => {
 </script>
 
 <template>
+  <button
+    v-if="auth.jwtToken != null"
+    class="button is-primary"
+    @click="addModal"
+  >
+    Add an Author
+  </button>
   <div class="Author">
     <SearchBar @query-change="onSearch" />
-    <button
-      v-if="auth.jwtToken != null"
-      class="button is-primary"
-      @click="addModal"
-    >
-      Add an Author
-    </button>
 
     <FormModal :isActive="formModalActive" @close-modal="closeModal">
       <component
