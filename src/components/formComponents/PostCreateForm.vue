@@ -32,7 +32,6 @@ async function handleCreatePost() {
 
 async function loadAuthors() {
   authorList.value = await getAuthorsForDropdown();
-  console.log(authorList.value);
 }
 
 onMounted(async () => {
@@ -62,12 +61,15 @@ onMounted(async () => {
         required
         style="max-width: 1000px"
       /><br />
-      <select class="dropdown" v-model="selectedAuthor">
-        <option value="" disabled>Please select an author</option>
-        <option v-for="author in authorList" :value="author">
-          {{ author.name }}
-        </option>
-      </select>
+      Author:<br />
+      <div class="select is-primary">
+        <select required v-model="selectedAuthor">
+          <option value="" disabled>Please select an author</option>
+          <option v-for="author in authorList" :value="author">
+            {{ author.name }}
+          </option>
+        </select>
+      </div>
     </div>
     <footer class="modal-card-foot">
       <input class="button" type="submit" value="Submit" />

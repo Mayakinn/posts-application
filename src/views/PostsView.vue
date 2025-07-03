@@ -19,6 +19,7 @@ const searchQuery = ref<string>("");
 const currentForm = shallowRef<Component>();
 const formModalActive = ref(false);
 const auth = useAuthStore();
+const postId = ref<string | number>(0);
 
 async function loadData() {
   try {
@@ -78,7 +79,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <SearchBar @query-change="onSearch" />
   <button
     v-if="auth.jwtToken != null"
     class="button is-primary"
@@ -86,10 +86,12 @@ onMounted(async () => {
   >
     Add a post
   </button>
+  <SearchBar @query-change="onSearch" />
   <FormModal :isActive="formModalActive" @close-modal="closeModal">
     <component
       @close-pressed="closeModalAfterForm"
       :is="currentForm"
+      :postId="postId"
     ></component>
   </FormModal>
   <div class="post">
