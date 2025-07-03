@@ -3,7 +3,7 @@ import { createAuthor, getAuthorsForDropdown } from "@/api/AuthorService";
 import { createPost } from "@/api/PostService";
 import type { Author } from "@/typings/interface/Author";
 import { isNumber } from "lodash";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps<{
   postId: number | string;
@@ -14,14 +14,33 @@ const inputedBody = ref<string>("");
 const selectedAuthor = ref<Author>();
 const authorList = ref<Author[]>();
 const emit = defineEmits(["close-pressed"]);
+const flag = ref<boolean>(true);
+
+const isInputed = computed(() => {
+  return inputedTitle.value.trim() !== "" && inputedBody.value.trim() !== "";
+});
+
+const titleLettersLimit = computed(() => {
+  return inputedTitle.value.trim().length <= 49;
+});
+const bodyLettersLimit = computed(() => {
+  return inputedBody.value.trim().length <= 499;
+});
 
 async function handleCreatePost() {
   if (selectedAuthor.value?.id != null) {
-    await createPost(
+    const response = await createPost(
       inputedTitle.value.trim(),
       inputedBody.value.trim(),
       selectedAuthor.value?.id
     );
+    if (response == null) {
+      inputedTitle.value = "";
+      inputedBody.value = "";
+      selectedAuthor.value = undefined;
+      emit("close-pressed", flag);
+      return;
+    }
   }
   inputedTitle.value = "";
   inputedBody.value = "";
@@ -50,6 +69,7 @@ onMounted(async () => {
         type="text"
         class="input is-primary is-rounded"
         required
+        maxlength="50"
         style="max-width: 1000px"
       />
       Post body:
@@ -58,6 +78,7 @@ onMounted(async () => {
         v-model="inputedBody"
         type="text"
         required
+        maxlength="500"
         style="max-width: 1000px"
       ></textarea>
       Author:<br />
@@ -71,7 +92,18 @@ onMounted(async () => {
       </div>
     </div>
     <footer class="modal-card-foot">
-      <input class="button" type="submit" value="Submit" />
+      <input
+        class="button"
+        type="submit"
+        value="Submit"
+        :disabled="!isInputed"
+      />
     </footer>
+    <p v-show="!titleLettersLimit">
+      Title length limit reached. (Max. 60 symbols)
+    </p>
+    <p v-show="!bodyLettersLimit">
+      Title length limit reached. (Max. 500 symbols)
+    </p>
   </form>
 </template>

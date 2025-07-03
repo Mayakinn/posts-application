@@ -57,10 +57,13 @@ const closeModal = () => {
   formModalActive.value = false;
 };
 
-const closeModalAfterForm = () => {
+function closeModalAfterForm(flag: boolean) {
   formModalActive.value = false;
-  loadData();
-};
+  postId.value = 0;
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 function onSearch(newQuery: string) {
   searchQuery.value = newQuery;

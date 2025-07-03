@@ -98,7 +98,6 @@ const createPost = async (
       `Author creation failed. User unauthorized or session has ended. ${error} `,
       NotificationType.danger
     );
-    auth.logOutUser();
     return;
   }
 };
