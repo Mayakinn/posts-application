@@ -2,6 +2,8 @@ import Axios from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import type { Post } from "@/typings/interface/Post";
+import { useAuthStore } from "@/store/AuthStore";
+import { v4 as uuidv4 } from "uuid";
 
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
@@ -58,4 +60,47 @@ const getPost = async (id: string) => {
   }
 };
 
-export { getPosts, getPost };
+const createPost = async (
+  title: string,
+  body: string,
+  authorId: number | string
+) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const response = await Axios.post(
+      `${DB_URL}/posts`,
+      {
+        id: uuidv4(),
+        title: title,
+        body: body,
+        authorId: authorId,
+        userId: auth.userId,
+        created_at: Date.now(),
+        updated_at: Date.now(),
+      },
+      config
+    );
+    notif.newNotification(
+      "Author created succesfully",
+      NotificationType.success
+    );
+    return response.data;
+  } catch (error) {
+    notif.newNotification(
+      `Author creation failed. User unauthorized or session has ended. ${error} `,
+      NotificationType.danger
+    );
+    auth.logOutUser();
+    return;
+  }
+};
+
+export { getPosts, getPost, createPost };

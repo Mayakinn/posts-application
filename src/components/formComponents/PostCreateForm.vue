@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { createAuthor, getAuthorsForDropdown } from "@/api/AuthorService";
+import { createPost } from "@/api/PostService";
 import type { Author } from "@/typings/interface/Author";
+import { isNumber } from "lodash";
 import { onMounted, ref } from "vue";
 
 const props = defineProps<{
@@ -14,8 +16,17 @@ const authorList = ref<Author[]>();
 const emit = defineEmits(["close-pressed"]);
 
 async function handleCreatePost() {
+  if (selectedAuthor.value?.id != null) {
+    await createPost(
+      inputedTitle.value,
+      inputedBody.value,
+      selectedAuthor.value?.id
+    );
+  }
+  console.log(inputedTitle.value, inputedBody.value, selectedAuthor.value?.id);
   inputedTitle.value = "";
   inputedBody.value = "";
+  selectedAuthor.value = undefined;
   emit("close-pressed");
 }
 
@@ -30,36 +41,36 @@ onMounted(async () => {
 </script>
 
 <template>
-  <header class="modal-card-head">
-    <p class="modal-card-title">Post Creation</p>
-  </header>
-  <div class="modal-card-body">
-    Post Title:
-    <input
-      v-model="inputedTitle"
-      type="text"
-      class="input is-primary is-rounded"
-      required
-      style="max-width: 1000px"
-    />
-    Post body:
-    <input
-      v-model="inputedBody"
-      type="text"
-      class="input is-primary is-rounded"
-      required
-      style="max-width: 1000px"
-    /><br />
-    <select class="dropdown" v-bind:value="selectedAuthor">
-      <option value="" disabled>Please select an author</option>
-      <option v-for="author in authorList" :key="author.id" :value="author">
-        {{ author.name }}
-      </option>
-    </select>
-  </div>
-  <footer class="modal-card-foot">
-    <button @click="handleCreatePost" class="button is-primary">
-      Add new Author
-    </button>
-  </footer>
+  <form @submit.prevent="handleCreatePost">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Post Creation</p>
+    </header>
+    <div class="modal-card-body">
+      Post Title:
+      <input
+        v-model="inputedTitle"
+        type="text"
+        class="input is-primary is-rounded"
+        required
+        style="max-width: 1000px"
+      />
+      Post body:
+      <input
+        v-model="inputedBody"
+        type="text"
+        class="input is-primary is-rounded"
+        required
+        style="max-width: 1000px"
+      /><br />
+      <select class="dropdown" v-model="selectedAuthor">
+        <option value="" disabled>Please select an author</option>
+        <option v-for="author in authorList" :value="author">
+          {{ author.name }}
+        </option>
+      </select>
+    </div>
+    <footer class="modal-card-foot">
+      <input class="button" type="submit" value="Submit" />
+    </footer>
+  </form>
 </template>

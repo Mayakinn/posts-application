@@ -21,6 +21,7 @@ const login = async (email: string, pass: string) => {
     notif.newNotification("Succesfully logged in", NotificationType.success);
     localStorage.setItem("token", data.accessToken);
     localStorage.setItem("name", data.user.name);
+    localStorage.setItem("userId", data.user.id);
     router.push("posts");
     return data;
   } catch (error) {
