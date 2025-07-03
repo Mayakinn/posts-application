@@ -5,6 +5,7 @@ import type { Author } from "@/typings/interface/Author";
 import { useAuthStore } from "@/store/AuthStore";
 import { uniqueId } from "lodash";
 import { v4 as uuidv4 } from "uuid";
+import { ref } from "vue";
 
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
@@ -49,7 +50,6 @@ const getAuthors = async (
 const deleteAuthor = async (authorId: number | string) => {
   const notif = useNotificationStore();
   const auth = useAuthStore();
-
   let config = {
     headers: {
       Authorization: "Bearer " + auth.jwtToken,
@@ -67,10 +67,9 @@ const deleteAuthor = async (authorId: number | string) => {
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Author deletion failed. User unauthorized or session has ended. ${error} `,
+      `Author deletion failed. ${error} `,
       NotificationType.danger
     );
-    auth.logOutUser();
 
     return;
   }
