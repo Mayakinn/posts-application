@@ -10,18 +10,31 @@ const loading = ref<boolean>(true);
 const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
 const authorData = ref<Author>();
+const flag = ref<boolean>(true);
 
 const emit = defineEmits(["close-pressed"]);
 
+const nameLettersLimit = computed(() => {
+  return inputedName.value.length <= 19;
+});
+const surnameLettersLimit = computed(() => {
+  return inputedSurname.value.length <= 19;
+});
+
 async function handleEditAuthor() {
-  if (authorData.value != null)
-    await editAuthor(
+  if (authorData.value != null) {
+    const response = await editAuthor(
       props.authorId,
-      inputedName.value,
-      inputedSurname.value,
+      inputedName.value.trim(),
+      inputedSurname.value.trim(),
       authorData.value.created_at
     );
-  console.log("it passed");
+    if (response == null) {
+      emit("close-pressed", flag.value);
+      return;
+    }
+  }
+
   inputedName.value = "";
   inputedSurname.value = "";
   emit("close-pressed");
@@ -32,6 +45,11 @@ const isEdited = computed(() => {
     inputedSurname.value !== authorData.value?.surname
   );
 });
+
+const isInputed = computed(() => {
+  return inputedName.value.trim() !== "" && inputedSurname.value.trim() !== "";
+});
+
 watch(
   () => props.authorId,
   () => {
@@ -68,6 +86,7 @@ onMounted(async () => {
         type="text"
         class="input is-primary is-rounded"
         required
+        maxlength="20"
         style="max-width: 1000px"
       />
       Author surname:
@@ -76,6 +95,7 @@ onMounted(async () => {
         type="text"
         class="input is-primary is-rounded"
         required
+        maxlength="20"
         style="max-width: 1000px"
       /><br />
     </div>
@@ -84,8 +104,14 @@ onMounted(async () => {
         class="button"
         type="submit"
         value="Submit"
-        :disabled="!isEdited"
+        :disabled="!isEdited || !isInputed"
       />
     </footer>
+    <p v-show="!nameLettersLimit">
+      Name symbol limit reached (Max. 20 symbols).
+    </p>
+    <p v-show="!surnameLettersLimit">
+      Surname symbol limit reached (Max. 20 symbols).
+    </p>
   </form>
 </template>
