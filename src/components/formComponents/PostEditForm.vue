@@ -21,7 +21,6 @@ async function handleEditPost() {
       postData.value.created_at,
       postData.value.authorId
     );
-  console.log("it passed");
   inputedTitle.value = "";
   inputedBody.value = "";
   emit("close-pressed");
