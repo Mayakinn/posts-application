@@ -17,8 +17,8 @@ async function handleEditAuthor() {
   if (authorData.value != null)
     await editAuthor(
       props.authorId,
-      inputedName.value,
-      inputedSurname.value,
+      inputedName.value.trim(),
+      inputedSurname.value.trim(),
       authorData.value.created_at
     );
   console.log("it passed");
@@ -26,19 +26,19 @@ async function handleEditAuthor() {
   inputedSurname.value = "";
   emit("close-pressed");
 }
-const isEdited = computed(() => {
-  return (
-    inputedName.value !== authorData.value?.name ||
-    inputedSurname.value !== authorData.value?.surname
-  );
-});
+
 watch(
   () => props.authorId,
   () => {
     if (props.authorId != 0) loadData();
   }
 );
-
+const isEdited = computed(() => {
+  return (
+    inputedName.value !== authorData.value?.name ||
+    inputedSurname.value !== authorData.value?.surname
+  );
+});
 async function loadData() {
   loading.value = true;
   authorData.value = await getAuthor(props.authorId).then();

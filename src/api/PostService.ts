@@ -38,7 +38,7 @@ const getPosts = async (
   }
 };
 
-const getPost = async (id: string) => {
+const getPost = async (id: string | number) => {
   const notif = useNotificationStore();
   try {
     const response = await Axios.get(`${DB_URL}/posts/${id}?_expand=author`);
@@ -103,4 +103,45 @@ const createPost = async (
   }
 };
 
-export { getPosts, getPost, createPost };
+const editPost = async (
+  postId: number | string,
+  title: string,
+  body: string,
+  createdDate: Date,
+  authorId: number | string
+) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const response = await Axios.put(
+      `${DB_URL}/posts/${postId}`,
+      {
+        id: postId,
+        title: title,
+        body: body,
+        authorId: authorId,
+        userId: auth.userId,
+        created_at: createdDate,
+        updated_at: Date.now(),
+      },
+      config
+    );
+    notif.newNotification("Post edited succesfully", NotificationType.success);
+    return response.data;
+  } catch (error) {
+    notif.newNotification(
+      `Post changes failed. User unauthorized or session has ended. ${error} `,
+      NotificationType.danger
+    );
+    return;
+  }
+};
+
+export { getPosts, getPost, createPost, editPost };

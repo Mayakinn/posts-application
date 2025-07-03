@@ -8,6 +8,7 @@ import SearchBar from "@/components/pageComponents/SearchBar.vue";
 import PostCreateForm from "@/components/formComponents/PostCreateForm.vue";
 import { useAuthStore } from "@/store/AuthStore";
 import FormModal from "@/components/modalComponents/FormModal.vue";
+import PostEditForm from "@/components/formComponents/PostEditForm.vue";
 
 const loading = ref<boolean>(true);
 const posts = ref<Post[]>([]);
@@ -57,8 +58,15 @@ const closeModal = () => {
   formModalActive.value = false;
 };
 
+function editModal(emit: number | string) {
+  currentForm.value = PostEditForm;
+  formModalActive.value = true;
+  postId.value = emit;
+}
+
 const closeModalAfterForm = () => {
   formModalActive.value = false;
+  postId.value = 0;
   loadData();
 };
 
@@ -98,7 +106,7 @@ onMounted(async () => {
     <div v-if="loading" class="title">Loading posts information</div>
     <div v-else-if="empty" class="title">Post list is empty</div>
     <div v-else>
-      <PostList :Posts="posts" />
+      <PostList :Posts="posts" @edit-pressed-card="editModal" />
       <div class="buttons is-centered mx-5 my-3">
         <Pagination
           :currentPage="currentPage"
