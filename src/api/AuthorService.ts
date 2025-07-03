@@ -116,7 +116,8 @@ const createAuthor = async (name: string, surname: string) => {
 const editAuthor = async (
   authorId: string | number,
   name: string,
-  surname: string
+  surname: string,
+  createdDate: Date
 ) => {
   const notif = useNotificationStore();
   const auth = useAuthStore();
@@ -134,6 +135,7 @@ const editAuthor = async (
         id: authorId,
         name: name,
         surname: surname,
+        created_at: createdDate,
         updated_at: Date.now(),
       },
       config

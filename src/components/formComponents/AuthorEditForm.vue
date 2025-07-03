@@ -14,7 +14,14 @@ const authorData = ref<Author>();
 const emit = defineEmits(["close-pressed"]);
 
 async function handleEditAuthor() {
-  await editAuthor(props.authorId, inputedName.value, inputedSurname.value);
+  if (authorData.value != null) {
+    await editAuthor(
+      props.authorId,
+      inputedName.value,
+      inputedSurname.value,
+      authorData.value.created_at
+    );
+  }
   console.log("it passed");
   inputedName.value = "";
   inputedSurname.value = "";

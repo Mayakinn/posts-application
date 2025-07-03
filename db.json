@@ -9,24 +9,11 @@
   ],
   "authors": [
     {
-      "id": 2,
-      "name": "Jane",
-      "surname": "Smiths",
-      "updated_at": 1751519380022
-    },
-    {
-      "id": 3,
-      "name": "Michael",
-      "surname": "Johnson",
-      "updated_at": 1751517286206
-    },
-    {
       "id": 4,
       "name": "Emily",
-      "surname": "Brown",
-      "userId": 1,
+      "surname": "Brownf",
       "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
+      "updated_at": 1751525228697
     },
     {
       "id": "6b813c60-ad81-4e9b-a6f6-022f45407dc6",
@@ -52,24 +39,6 @@
   ],
   "posts": [
     {
-      "id": 2,
-      "title": "Second Post",
-      "body": "This is the body of the second post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 2,
-      "userId": 1,
-      "created_at": "2024-05-05T12:01:00Z",
-      "updated_at": "2024-05-05T12:01:00Z"
-    },
-    {
-      "id": 3,
-      "title": "Third Post",
-      "body": "This is the body of the third post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 3,
-      "userId": 1,
-      "created_at": "2024-05-05T12:02:00Z",
-      "updated_at": "2024-05-05T12:02:00Z"
-    },
-    {
       "id": 4,
       "title": "Fourth Post",
       "body": "This is the body of the fourth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
@@ -77,24 +46,6 @@
       "userId": 1,
       "created_at": "2024-05-05T12:03:00Z",
       "updated_at": "2024-05-05T12:03:00Z"
-    },
-    {
-      "id": 7,
-      "title": "Seventh Post",
-      "body": "This is the body of the seventh post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 2,
-      "userId": 1,
-      "created_at": "2024-05-05T12:06:00Z",
-      "updated_at": "2024-05-05T12:06:00Z"
-    },
-    {
-      "id": 8,
-      "title": "Eighth Post",
-      "body": "This is the body of the eighth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 3,
-      "userId": 1,
-      "created_at": "2024-05-05T12:07:00Z",
-      "updated_at": "2024-05-05T12:07:00Z"
     },
     {
       "id": 9,
