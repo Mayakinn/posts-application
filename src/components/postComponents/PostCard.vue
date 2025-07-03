@@ -14,9 +14,7 @@ const isPostRoute = ref(false);
 const router = useRouter();
 const route = useRoute();
 
-const emit = defineEmits(["delete-pressed"]);
-
-const canEdit = computed(() => isPostRoute.value && auth.jwtToken);
+const canEdit = computed(() => auth.jwtToken);
 
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.post.created_at) >= new Date(props.post.updated_at)
@@ -30,11 +28,14 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div
-    class="card"
-    @click="router.push({ name: 'post', params: { id: post.id } })"
-  >
-    <header class="card-header">
+  <div class="card">
+    <header
+      class="card-header"
+      @click="
+        router.push({ name: 'post', params: { id: post.id } });
+        console.log('cardclicked');
+      "
+    >
       <p class="card-header-title">{{ post.title }}</p>
     </header>
     <div class="card-content">
@@ -48,7 +49,10 @@ onMounted(async () => {
     <div v-if="canEdit">
       <footer class="card-footer">
         <button class="card-footer-item">Edit</button>
-        <button @click="() => emit('delete-pressed')" class="card-footer-item">
+        <button
+          @click="console.log('delete clickked')"
+          class="card-footer-item"
+        >
           Delete
         </button>
       </footer>
