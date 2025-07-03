@@ -22,7 +22,6 @@ async function handleEditAuthor() {
       authorData.value.created_at
     );
   }
-  console.log("it passed");
   inputedName.value = "";
   inputedSurname.value = "";
   emit("close-pressed");
