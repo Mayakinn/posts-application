@@ -11,26 +11,20 @@
     {
       "id": 2,
       "name": "Jane",
-      "surname": "Smith",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
+      "surname": "Smiths",
+      "updated_at": 1751518340072
     },
     {
       "id": 3,
       "name": "Michael",
       "surname": "Johnson",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
+      "updated_at": 1751517286206
     },
     {
       "id": 4,
       "name": "Emily",
       "surname": "Brown",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
+      "updated_at": 1751517276055
     }
   ],
   "posts": [

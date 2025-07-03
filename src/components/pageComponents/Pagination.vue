@@ -21,12 +21,14 @@ const emit = defineEmits(["page-change"]);
 const pages = ref<number[]>([]);
 
 const calculatePages = () => {
-  const totalPages = Math.max(1, Math.ceil(props.totalItems / props.itemsPerPage));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(props.totalItems / props.itemsPerPage)
+  );
   const correctedCurrentPage = Math.min(props.currentPage, totalPages);
 
-  if (correctedCurrentPage !== props.currentPage) {
-    emit("page-change", correctedCurrentPage);
-    return;
+  if (props.currentPage > totalPages) {
+    changePage(totalPages);
   }
 
   const startPage = Math.max(1, correctedCurrentPage - 5);
@@ -53,18 +55,31 @@ const changePage = (page: number) => {
 
 <template>
   <div>
-    <button class="button" :disabled="props.currentPage === 1" @click="changePage(props.currentPage - 1)">
+    <button
+      class="button"
+      :disabled="props.currentPage === 1"
+      @click="changePage(props.currentPage - 1)"
+    >
       Previous
     </button>
 
     <span v-for="page in pages" :key="page">
-      <button class="button" :class="{ 'button is-primary': page === props.currentPage }" @click="changePage(page)">
+      <button
+        class="button"
+        :class="{ 'button is-primary': page === props.currentPage }"
+        @click="changePage(page)"
+      >
         {{ page }}
       </button>
     </span>
 
-    <button class="button" :disabled="props.currentPage === Math.ceil(props.totalItems / props.itemsPerPage)
-      " @click="changePage(props.currentPage + 1)">
+    <button
+      class="button"
+      :disabled="
+        props.currentPage === Math.ceil(props.totalItems / props.itemsPerPage)
+      "
+      @click="changePage(props.currentPage + 1)"
+    >
       Next
     </button>
   </div>
