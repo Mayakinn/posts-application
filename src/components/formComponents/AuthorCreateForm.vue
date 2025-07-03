@@ -9,9 +9,17 @@ const props = defineProps<{
 const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
 const emit = defineEmits(["close-pressed"]);
+const lengthWarning = ref<boolean>(false);
 
 const isInputed = computed(() => {
-  return inputedName.value !== "" && inputedSurname.value !== "";
+  return inputedName.value.trim() !== "" && inputedSurname.value.trim() !== "";
+});
+
+const nameLettersLimit = computed(() => {
+  return inputedName.value.trim().length <= 19;
+});
+const surnameLettersLimit = computed(() => {
+  return inputedSurname.value.trim().length <= 19;
 });
 
 async function handleCreateAuthor() {
@@ -23,7 +31,7 @@ async function handleCreateAuthor() {
 </script>
 
 <template>
-  <form @submit="handleCreateAuthor">
+  <form @submit.prevent="handleCreateAuthor">
     <header class="modal-card-head">
       <p class="modal-card-title">Author Creation</p>
     </header>
@@ -34,6 +42,7 @@ async function handleCreateAuthor() {
         type="text"
         class="input is-primary is-rounded"
         required
+        maxlength="20"
         style="max-width: 1000px"
       />
       Author surname:
@@ -42,6 +51,7 @@ async function handleCreateAuthor() {
         type="text"
         class="input is-primary is-rounded"
         required
+        maxlength="20"
         style="max-width: 1000px"
       /><br />
     </div>
@@ -53,5 +63,7 @@ async function handleCreateAuthor() {
         :disabled="!isInputed"
       />
     </footer>
+    <p v-show="!nameLettersLimit">Name is too long. (Max. 20 symbols)</p>
+    <p v-show="!surnameLettersLimit">Surname is too long. (Max. 20 symbols)</p>
   </form>
 </template>

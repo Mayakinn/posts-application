@@ -73,11 +73,13 @@ const closeModal = () => {
   formModalActive.value = false;
   authorId.value = 0;
 };
-const closeModalAfterForm = () => {
-  loadData();
+function closeModalAfterForm(flag: boolean) {
   formModalActive.value = false;
   authorId.value = 0;
-};
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 watch([searchQuery, currentPage], loadData);
 
