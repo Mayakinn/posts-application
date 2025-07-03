@@ -15,7 +15,7 @@ const isInputed = computed(() => {
 });
 
 async function handleCreateAuthor() {
-  await createAuthor(inputedName.value, inputedSurname.value);
+  await createAuthor(inputedName.value.trim(), inputedSurname.value.trim());
   inputedName.value = "";
   inputedSurname.value = "";
   emit("close-pressed");
