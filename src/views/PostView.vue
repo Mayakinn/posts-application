@@ -46,7 +46,11 @@ const showEditModal = (emit: number | string) => {
 const closeModalAfterForm = () => {
   formModalActive.value = false;
   postId.value = 0;
-  loadData();
+  if (currentForm.value == PostDeleteForm) {
+    router.push("/");
+  } else {
+    loadData();
+  }
 };
 
 const closeModal = () => {

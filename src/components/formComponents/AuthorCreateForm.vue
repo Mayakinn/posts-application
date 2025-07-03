@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { createAuthor } from "@/api/AuthorService";
-import { createSourceMapSource } from "typescript";
 import { computed, ref } from "vue";
 
 const props = defineProps<{

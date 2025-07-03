@@ -21,42 +21,17 @@
       "surname": "sdfsf",
       "created_at": 1751449996074,
       "updated_at": 1751524930846
-    },
-    {
-      "id": "79b9c2d0-c5d2-499f-9f16-4b350abcd2f4",
-      "name": "dfsfsf",
-      "surname": "sdfsf",
-      "created_at": 1751449998938,
-      "updated_at": 1751449998938
     }
   ],
   "posts": [
     {
-      "id": 4,
-      "title": "Fourth Post",
-      "body": "This is the body of the fourth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "id": "444eb0d0-de7f-44fb-8fcd-3579b2dd3b0e",
+      "title": "asdasdad",
+      "body": "asdasdasdasdasd",
       "authorId": 4,
       "userId": "1",
-      "created_at": "2024-05-05T12:03:00Z",
-      "updated_at": 1751530867599
-    },
-    {
-      "id": 9,
-      "title": "Ninth Post",
-      "body": "This is the body of the ninth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 4,
-      "userId": "1",
-      "created_at": "2024-05-05T12:08:00Z",
-      "updated_at": 1751531492338
-    },
-    {
-      "id": "54622dbb-ea87-4028-b31d-6eca9695d0e3",
-      "title": "sdfsf",
-      "body": "sdfsdf",
-      "authorId": 4,
-      "userId": "1",
-      "created_at": 1751526731605,
-      "updated_at": 1751526731605
+      "created_at": 1751536044203,
+      "updated_at": 1751536044203
     }
   ]
 }

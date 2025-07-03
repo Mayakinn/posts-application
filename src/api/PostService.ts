@@ -144,4 +144,28 @@ const editPost = async (
   }
 };
 
-export { getPosts, getPost, createPost, editPost };
+const deletePost = async (postId: number | string) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+    },
+  };
+  try {
+    const response = await Axios.delete(`${DB_URL}/posts/${postId}`, config);
+    notif.newNotification("Post deleted succesfully", NotificationType.success);
+    return response.data;
+  } catch (error) {
+    notif.newNotification(
+      `Post deletion failed. User unauthorized or session has ended. ${error} `,
+      NotificationType.danger
+    );
+    auth.logOutUser();
+
+    return;
+  }
+};
+
+export { getPosts, getPost, createPost, editPost, deletePost };
