@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createAuthor } from "@/api/AuthorService";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps<{
   authorId: number | string;
@@ -9,6 +9,10 @@ const props = defineProps<{
 const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
 const emit = defineEmits(["close-pressed"]);
+
+const isInputed = computed(() => {
+  return inputedName.value !== "" && inputedSurname.value !== "";
+});
 
 async function handleCreateAuthor() {
   await createAuthor(inputedName.value, inputedSurname.value);
@@ -42,7 +46,12 @@ async function handleCreateAuthor() {
       /><br />
     </div>
     <footer class="modal-card-foot">
-      <input class="button" type="submit" value="Submit" />
+      <input
+        class="button"
+        type="submit"
+        value="Submit"
+        :disabled="!isInputed"
+      />
     </footer>
   </form>
 </template>
