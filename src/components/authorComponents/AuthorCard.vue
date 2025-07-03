@@ -3,6 +3,7 @@ import type { Author } from "@/typings/interface/Author";
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useAuthStore } from "@/store/AuthStore";
+import FormModal from "../modalComponents/FormModal.vue";
 
 const props = defineProps<{
   author: Author;

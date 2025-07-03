@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post } from "../../typings/interface/Post";
+import FormModal from "../modalComponents/FormModal.vue";
 import PostCard from "./PostCard.vue";
 const props = defineProps<{
   Posts: Post[] | undefined;
@@ -11,6 +12,5 @@ const props = defineProps<{
     <div class="column is-full" v-for="post in props.Posts" :key="post.id">
       <PostCard :post="post" />
     </div>
-    <router-view />
   </div>
 </template>
