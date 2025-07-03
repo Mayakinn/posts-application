@@ -45,6 +45,7 @@ async function loadData() {
     if (totalItems.value == 0) {
       empty.value = true;
     }
+
     loading.value = false;
   }
 }
@@ -100,7 +101,6 @@ onMounted(async () => {
   >
     Add an Author
   </button>
-
   <div class="Author">
     <SearchBar @query-change="onSearch" />
 
