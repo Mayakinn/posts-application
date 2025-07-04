@@ -10,6 +10,7 @@ const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
 const emit = defineEmits(["close-pressed"]);
 const flag = ref<boolean>(true);
+const cantSubmit = ref<boolean>(false);
 
 const isInputed = computed(() => {
   return inputedName.value.trim() !== "" && inputedSurname.value.trim() !== "";
@@ -23,17 +24,20 @@ const surnameLettersLimit = computed(() => {
 });
 
 async function handleCreateAuthor() {
-  const response = await createAuthor(
-    inputedName.value.trim(),
-    inputedSurname.value.trim()
-  );
-  if (response == null) {
-    emit("close-pressed", flag.value);
-    return;
+  if (!nameLettersLimit || !surnameLettersLimit || !isInputed) {
+    const response = await createAuthor(
+      inputedName.value.trim(),
+      inputedSurname.value.trim()
+    );
+    if (response == null) {
+      emit("close-pressed", flag.value);
+      return;
+    }
+    inputedName.value = "";
+    inputedSurname.value = "";
+    emit("close-pressed");
   }
-  inputedName.value = "";
-  inputedSurname.value = "";
-  emit("close-pressed");
+  cantSubmit.value = true;
 }
 </script>
 
@@ -76,5 +80,6 @@ async function handleCreateAuthor() {
     <p v-show="!surnameLettersLimit">
       Surname symbol limit has been reached (Max. 20 symbols).
     </p>
+    <p v-show="cantSubmit">Can't submit, too many symbols!!!</p>
   </form>
 </template>
