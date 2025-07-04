@@ -22,6 +22,9 @@ const pages = ref<number[]>([]);
 
 const calculatePages = () => {
   const totalPages = Math.ceil(props.totalItems / props.itemsPerPage);
+  if (props.currentPage > totalPages) {
+    changePage(totalPages);
+  }
   pages.value = [];
   const startPage = Math.max(1, props.currentPage - 5);
   const endPage = Math.min(props.currentPage + 5, totalPages);

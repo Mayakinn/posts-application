@@ -25,15 +25,18 @@ async function loadData() {
       searchQuery.value
     );
 
-    if (postsData?.[0]?.length === 0) {
+    if (postsData?.[1] === 0) {
       empty.value = true;
     }
 
     posts.value = postsData?.[0] || [];
     totalItems.value = postsData?.[1] || 0;
   } catch (error) {
-    empty.value = true;
+    loading.value = false;
   } finally {
+    if (totalItems.value == 0) {
+      empty.value = true;
+    }
     loading.value = false;
   }
 }

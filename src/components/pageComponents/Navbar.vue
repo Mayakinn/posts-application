@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/store/AuthStore";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 const auth = useAuthStore();
-const user = ref<string | null>("");
 
-onMounted(() => {
-  const name = localStorage.getItem("name");
-  if (name) {
-    user.value = name;
-  }
+const user = computed(() => {
+  return localStorage.getItem("name");
 });
 </script>
 
