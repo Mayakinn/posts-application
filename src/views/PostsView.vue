@@ -54,6 +54,12 @@ function addModal() {
   formModalActive.value = true;
 }
 
+function editModal(emitted: number) {
+  currentForm.value = PostEditForm;
+  postId.value = emitted;
+  formModalActive.value = true;
+}
+
 const closeModal = () => {
   formModalActive.value = false;
 };

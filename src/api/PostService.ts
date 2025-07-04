@@ -136,7 +136,7 @@ const editPost = async (
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Post changes failed. User unauthorized or session has ended. ${error} `,
+      `Post changes failed. ${error} `,
       NotificationType.danger
     );
     return;
