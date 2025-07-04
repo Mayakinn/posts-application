@@ -103,7 +103,7 @@ onMounted(async () => {
       Title length limit reached. (Max. 60 symbols)
     </p>
     <p v-show="!bodyLettersLimit">
-      Title length limit reached. (Max. 500 symbols)
+      Post body length limit reached. (Max. 500 symbols)
     </p>
   </form>
 </template>
