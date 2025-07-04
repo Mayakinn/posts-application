@@ -2,9 +2,12 @@
 import PostList from "@/components/postComponents/PostList.vue";
 import { getPosts } from "@/api/PostService";
 import { type Post } from "@/typings/interface/Post";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, shallowRef, type Component } from "vue";
 import Pagination from "@/components/pageComponents/Pagination.vue";
 import SearchBar from "@/components/pageComponents/SearchBar.vue";
+import PostCreateForm from "@/components/formComponents/PostCreateForm.vue";
+import { useAuthStore } from "@/store/AuthStore";
+import FormModal from "@/components/modalComponents/FormModal.vue";
 
 const loading = ref<boolean>(true);
 const posts = ref<Post[]>([]);
@@ -13,6 +16,10 @@ const totalItems = ref(0);
 const currentPage = ref(1);
 const itemsPerPage = ref(10);
 const searchQuery = ref<string>("");
+const currentForm = shallowRef<Component>();
+const formModalActive = ref(false);
+const auth = useAuthStore();
+const postId = ref<string | number>(0);
 
 async function loadData() {
   try {
@@ -41,6 +48,23 @@ async function loadData() {
   }
 }
 
+function addModal() {
+  currentForm.value = PostCreateForm;
+  formModalActive.value = true;
+}
+
+const closeModal = () => {
+  formModalActive.value = false;
+};
+
+function closeModalAfterForm(flag: boolean) {
+  formModalActive.value = false;
+  postId.value = 0;
+  if (flag) {
+    return;
+  } else loadData();
+}
+
 function onSearch(newQuery: string) {
   searchQuery.value = newQuery;
   currentPage.value = 1;
@@ -58,7 +82,21 @@ onMounted(async () => {
 </script>
 
 <template>
+  <button
+    v-if="auth.jwtToken != null"
+    class="button is-primary"
+    @click="addModal"
+  >
+    Add a post
+  </button>
   <SearchBar @query-change="onSearch" />
+  <FormModal :isActive="formModalActive" @close-modal="closeModal">
+    <component
+      @close-pressed="closeModalAfterForm"
+      :is="currentForm"
+      :postId="postId"
+    ></component>
+  </FormModal>
   <div class="post">
     <div v-if="loading" class="title">Loading posts information</div>
     <div v-else-if="empty" class="title">Post list is empty</div>
