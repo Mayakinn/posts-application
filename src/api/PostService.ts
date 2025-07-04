@@ -160,7 +160,7 @@ const deletePost = async (postId: number | string) => {
     if (isAxiosError(error)) {
       if (error.status == 404) {
         notif.newNotification(
-          `Post not Found: ${error.status} `,
+          `Author not Found: ${error.status} `,
           NotificationType.danger
         );
         return Response.error;
@@ -173,13 +173,11 @@ const deletePost = async (postId: number | string) => {
       }
     } else {
       notif.newNotification(
-        `Post deletion failed. ${error} `,
+        `Author deletion failed. ${error} `,
         NotificationType.danger
       );
       return Response.error;
     }
-
-    return;
   }
 };
 
