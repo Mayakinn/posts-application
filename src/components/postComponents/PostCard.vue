@@ -13,6 +13,7 @@ const props = defineProps<{
 const isPostRoute = ref(false);
 const router = useRouter();
 const route = useRoute();
+const emit = defineEmits(["delete-pressed-card", "edit-pressed-card"]);
 
 const canEdit = computed(() => auth.jwtToken);
 
