@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Axios, { isAxiosError } from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import type { Post } from "@/typings/interface/Post";
@@ -157,11 +157,27 @@ const deletePost = async (postId: number | string) => {
     notif.newNotification("Post deleted succesfully", NotificationType.success);
     return response.data;
   } catch (error) {
-    notif.newNotification(
-      `Post deletion failed. User unauthorized or session has ended. ${error} `,
-      NotificationType.danger
-    );
-    auth.logOutUser();
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Post not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Post deletion failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
 
     return;
   }

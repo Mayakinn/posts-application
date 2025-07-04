@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { deletePost } from "@/api/PostService";
+import { ref } from "vue";
 
 const props = defineProps<{
   postId: number | string;
 }>();
 const emit = defineEmits(["close-pressed"]);
+const flag = ref<boolean>(true);
 
 async function handleDelete(postId: number | string) {
-  await deletePost(postId);
+  const response = await deletePost(postId);
+  if (response == null) {
+    emit("close-pressed", flag);
+    return;
+  }
   emit("close-pressed");
 }
 </script>

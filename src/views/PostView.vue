@@ -32,8 +32,9 @@ const handleBackClick = () => {
   router.push("/");
 };
 
-const showDeleteModal = () => {
+const showDeleteModal = (emit: number | string) => {
   currentForm.value = PostDeleteForm;
+  postId.value = emit;
   formModalActive.value = !formModalActive.value;
 };
 
@@ -48,7 +49,11 @@ function closeModalAfterForm(flag: boolean) {
   postId.value = 0;
   if (flag) {
     return;
-  } else loadData();
+  } else if (currentForm.value == PostDeleteForm) {
+    router.push("/");
+    return;
+  }
+  loadData();
 }
 
 const closeModal = () => {
