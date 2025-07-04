@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Axios, { isAxiosError } from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import type { Post } from "@/typings/interface/Post";
@@ -135,11 +135,27 @@ const editPost = async (
     notif.newNotification("Post edited succesfully", NotificationType.success);
     return response.data;
   } catch (error) {
-    notif.newNotification(
-      `Post changes failed. ${error} `,
-      NotificationType.danger
-    );
-    return;
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Post not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Post editing failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
   }
 };
 
