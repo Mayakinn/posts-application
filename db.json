@@ -9,33 +9,9 @@
   ],
   "authors": [
     {
-      "id": 2,
-      "name": "Jane",
-      "surname": "Smith",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
-    },
-    {
-      "id": 3,
-      "name": "Michael",
-      "surname": "Johnson",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
-    },
-    {
-      "id": 4,
-      "name": "Emily",
-      "surname": "Brown",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
-    },
-    {
       "id": "6b813c60-ad81-4e9b-a6f6-022f45407dc6",
-      "name": "sfdsf",
-      "surname": "sdfsf",
+      "name": "sfdsffbdbg",
+      "surname": "sdfsfgfd",
       "created_at": 1751449996074,
       "updated_at": 1751449996074
     },
@@ -47,60 +23,5 @@
       "updated_at": 1751449998938
     }
   ],
-  "posts": [
-    {
-      "id": 2,
-      "title": "Second Post",
-      "body": "This is the body of the second post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 2,
-      "userId": 1,
-      "created_at": "2024-05-05T12:01:00Z",
-      "updated_at": "2024-05-05T12:01:00Z"
-    },
-    {
-      "id": 3,
-      "title": "Third Post",
-      "body": "This is the body of the third post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 3,
-      "userId": 1,
-      "created_at": "2024-05-05T12:02:00Z",
-      "updated_at": "2024-05-05T12:02:00Z"
-    },
-    {
-      "id": 4,
-      "title": "Fourth Post",
-      "body": "This is the body of the fourth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 4,
-      "userId": 1,
-      "created_at": "2024-05-05T12:03:00Z",
-      "updated_at": "2024-05-05T12:03:00Z"
-    },
-    {
-      "id": 7,
-      "title": "Seventh Post",
-      "body": "This is the body of the seventh post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 2,
-      "userId": 1,
-      "created_at": "2024-05-05T12:06:00Z",
-      "updated_at": "2024-05-05T12:06:00Z"
-    },
-    {
-      "id": 8,
-      "title": "Eighth Post",
-      "body": "This is the body of the eighth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 3,
-      "userId": 1,
-      "created_at": "2024-05-05T12:07:00Z",
-      "updated_at": "2024-05-05T12:07:00Z"
-    },
-    {
-      "id": 9,
-      "title": "Ninth Post",
-      "body": "This is the body of the ninth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 4,
-      "userId": 1,
-      "created_at": "2024-05-05T12:08:00Z",
-      "updated_at": "2024-05-05T12:08:00Z"
-    }
-  ]
+  "posts": []
 }

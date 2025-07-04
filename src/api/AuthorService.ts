@@ -126,4 +126,83 @@ const createAuthor = async (name: string, surname: string) => {
   }
 };
 
-export { getAuthors, deleteAuthor, createAuthor };
+const editAuthor = async (
+  authorId: string | number,
+  name: string,
+  surname: string,
+  createdDate: Date
+) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const response = await Axios.put(
+      `${DB_URL}/authors/${authorId}`,
+      {
+        id: authorId,
+        name: name,
+        surname: surname,
+        created_at: createdDate,
+        updated_at: Date.now(),
+      },
+      config
+    );
+    notif.newNotification(
+      "Author edited succesfully",
+      NotificationType.success
+    );
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Author not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Author editing failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
+  }
+};
+
+const getAuthor = async (id: string | number) => {
+  const notif = useNotificationStore();
+  try {
+    const response = await Axios.get(`${DB_URL}/authors/${id}`);
+    const data = response.data;
+    if (!data) {
+      notif.newNotification("Author does not exist", NotificationType.danger);
+      return;
+    }
+    notif.newNotification(
+      "Succesfully fetched author data",
+      NotificationType.success
+    );
+    return data;
+  } catch (error) {
+    notif.newNotification(
+      `Failed to fetch author data : ${error}`,
+      NotificationType.danger
+    );
+  }
+};
+
+export { getAuthors, deleteAuthor, createAuthor, getAuthor, editAuthor };

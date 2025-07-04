@@ -21,14 +21,20 @@ const emit = defineEmits(["page-change"]);
 const pages = ref<number[]>([]);
 
 const calculatePages = () => {
-  const totalPages = Math.ceil(props.totalItems / props.itemsPerPage);
+  const totalPages = Math.max(
+    1,
+    Math.ceil(props.totalItems / props.itemsPerPage)
+  );
+  const correctedCurrentPage = Math.min(props.currentPage, totalPages);
+
   if (props.currentPage > totalPages) {
     changePage(totalPages);
   }
-  pages.value = [];
-  const startPage = Math.max(1, props.currentPage - 5);
-  const endPage = Math.min(props.currentPage + 5, totalPages);
 
+  const startPage = Math.max(1, correctedCurrentPage - 5);
+  const endPage = Math.min(correctedCurrentPage + 5, totalPages);
+
+  pages.value = [];
   for (let i = startPage; i <= endPage; i++) {
     pages.value.push(i);
   }
