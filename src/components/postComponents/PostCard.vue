@@ -39,11 +39,17 @@ onMounted(async () => {
     </header>
     <div class="card-content">
       <div class="content">
-        Author: {{ post.author.name }} {{ post.author.surname }}
+        Author: {{ post.author?.name }} {{ post.author?.surname }}
       </div>
       <p>{{ createdOrUpdatedDate }} <br /></p>
     </div>
-    <div v-if="isPostRoute" class="card-content">{{ post.body }}</div>
+    <div
+      v-if="isPostRoute"
+      class="card-content"
+      style="white-space: pre-wrap; overflow-wrap: break-word"
+    >
+      {{ post.body }}
+    </div>
 
     <div v-if="canEdit">
       <footer class="card-footer">

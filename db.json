@@ -31,22 +31,6 @@
       "userId": 1,
       "created_at": "2024-05-05T12:00:00Z",
       "updated_at": "2024-05-05T12:00:00Z"
-    },
-    {
-      "id": 4,
-      "name": "Emily",
-      "surname": "Brown",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
-    },
-    {
-      "id": 5,
-      "name": "David",
-      "surname": "Wilson",
-      "userId": 1,
-      "created_at": "2024-05-05T12:00:00Z",
-      "updated_at": "2024-05-05T12:00:00Z"
     }
   ],
   "posts": [
@@ -78,24 +62,6 @@
       "updated_at": "2024-05-05T12:02:00Z"
     },
     {
-      "id": 4,
-      "title": "Fourth Post",
-      "body": "This is the body of the fourth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 4,
-      "userId": 1,
-      "created_at": "2024-05-05T12:03:00Z",
-      "updated_at": "2024-05-05T12:03:00Z"
-    },
-    {
-      "id": 5,
-      "title": "Fifth Post",
-      "body": "This is the body of the fifth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 5,
-      "userId": 1,
-      "created_at": "2024-05-05T12:04:00Z",
-      "updated_at": "2024-05-05T12:04:00Z"
-    },
-    {
       "id": 6,
       "title": "Sixth Post",
       "body": "This is the body of the sixth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
@@ -123,15 +89,6 @@
       "updated_at": "2024-05-05T12:07:00Z"
     },
     {
-      "id": 9,
-      "title": "Ninth Post",
-      "body": "This is the body of the ninth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
-      "authorId": 4,
-      "userId": 1,
-      "created_at": "2024-05-05T12:08:00Z",
-      "updated_at": "2024-05-05T12:08:00Z"
-    },
-    {
       "title": "New post for testing",
       "body": "Testing text. Random text to make up the word count. This post is being generated for the purpose of testing. It fulfills the requirement of having at least twenty five words in the body field.",
       "authorId": 1,
@@ -141,22 +98,46 @@
       "id": 10
     },
     {
-      "id": "78fc55ac-259a-4240-ae96-037396c7b5cf",
-      "title": "This is a new post",
-      "body": "YOOOOO IT WORKS",
-      "authorId": 5,
+      "id": "aea52471-06e6-46da-abcf-f538716557a1",
+      "title": "Now this is epic",
+      "body": "g[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisb",
+      "authorId": 2,
       "userId": "1",
-      "created_at": 1751544723035,
-      "updated_at": 1751544723035
+      "created_at": 1751604851551,
+      "updated_at": 1751604851551
     },
     {
-      "id": "eb703dde-5497-49cb-9301-e3b9b93a50d3",
-      "title": "TEST POST WHEN AUTHOR DELETED",
-      "body": "yyeeee",
-      "authorId": "cd9d2394-c3da-4c04-bb17-c712c26d1d3d",
+      "id": "be107f78-116c-4bd1-a447-4894acf23caa",
+      "title": "a lot of enters",
+      "body": "eafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf",
+      "authorId": 2,
       "userId": "1",
-      "created_at": 1751545331779,
-      "updated_at": 1751545331779
+      "created_at": 1751605680542,
+      "updated_at": 1751605680542
+    },
+    {
+      "id": "21a49bfb-1d8c-4e7d-9f19-e42508bbceb6",
+      "title": "hello there",
+      "body": "dasdad",
+      "authorId": 4,
+      "created_at": 1751607523439,
+      "updated_at": 1751607523439
+    },
+    {
+      "id": "e7e36c48-1be8-4501-9f12-d72c67fd45ce",
+      "title": "fsdfsdfsfd",
+      "body": "sfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdf",
+      "authorId": 2,
+      "created_at": 1751607961024,
+      "updated_at": 1751607961024
+    },
+    {
+      "id": "c957ad17-ac2a-4bea-a9a7-eaf612ece059",
+      "title": "dfsdfsdf",
+      "body": "fsdfsdfsdf",
+      "authorId": 2,
+      "created_at": 1751607985210,
+      "updated_at": 1751607985210
     }
   ]
 }
