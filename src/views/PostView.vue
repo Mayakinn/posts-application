@@ -70,8 +70,8 @@ onMounted(async () => {
         :postId="postId"
       ></component>
     </FormModal>
-    <div style="max-width: 1000px; margin: 0 auto" class="columns">
-      <div class="is-full">
+    <div class="container" style="max-width: 1000px; margin: 0 auto">
+      <div class="column is-full">
         <div v-if="singlePost" :id="singlePost.id.toString()">
           <PostCard
             :post="singlePost"

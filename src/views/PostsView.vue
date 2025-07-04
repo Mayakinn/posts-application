@@ -58,17 +58,13 @@ const closeModal = () => {
   formModalActive.value = false;
 };
 
-function editModal(emit: number | string) {
-  currentForm.value = PostEditForm;
-  formModalActive.value = true;
-  postId.value = emit;
-}
-
-const closeModalAfterForm = () => {
+function closeModalAfterForm(flag: boolean) {
   formModalActive.value = false;
   postId.value = 0;
-  loadData();
-};
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 function onSearch(newQuery: string) {
   searchQuery.value = newQuery;
