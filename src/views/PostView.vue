@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import PostCard from "@/components/postComponents/PostCard.vue";
 import type { Post } from "@/typings/interface/Post";
-import { onMounted, ref, type Component } from "vue";
+import { onMounted, ref, shallowRef, type Component } from "vue";
 import { getPost } from "@/api/PostService";
 import { useRoute, useRouter } from "vue-router";
 import FormModal from "@/components/modalComponents/FormModal.vue";
@@ -14,8 +14,19 @@ const router = useRouter();
 const loading = ref<boolean>(true);
 const empty = ref<boolean>(false);
 const singlePost = ref<Post>();
-const currentForm = ref<Component>();
+const currentForm = shallowRef<Component>();
 const formModalActive = ref(false);
+const postId = ref<string | number>(0);
+
+async function loadData() {
+  await getPost(route.params.id as string).then(function (response) {
+    loading.value = false;
+    singlePost.value = response;
+    if (singlePost.value == undefined) {
+      empty.value = true;
+    }
+  });
+}
 
 const handleBackClick = () => {
   router.push("/");
@@ -26,23 +37,26 @@ const showDeleteModal = () => {
   formModalActive.value = !formModalActive.value;
 };
 
-const showEditModal = () => {
+const showEditModal = (emit: number | string) => {
   currentForm.value = PostEditForm;
+  postId.value = emit;
   formModalActive.value = !formModalActive.value;
 };
+
+function closeModalAfterForm(flag: boolean) {
+  formModalActive.value = false;
+  postId.value = 0;
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 const closeModal = () => {
   formModalActive.value = false;
 };
 
 onMounted(async () => {
-  await getPost(route.params.id as string).then(function (response) {
-    loading.value = false;
-    singlePost.value = response;
-    if (singlePost.value == undefined) {
-      empty.value = true;
-    }
-  });
+  await loadData();
 });
 </script>
 
@@ -52,15 +66,19 @@ onMounted(async () => {
       < Go back to list
     </button>
     <FormModal :isActive="formModalActive" @close-modal="closeModal">
-      <component :is="currentForm"></component>
+      <component
+        :is="currentForm"
+        @close-pressed="closeModalAfterForm"
+        :postId="postId"
+      ></component>
     </FormModal>
     <div class="container" style="max-width: 1000px; margin: 0 auto">
       <div class="column is-full">
         <div v-if="singlePost" :id="singlePost.id.toString()">
           <PostCard
             :post="singlePost"
-            @delete-pressed="showDeleteModal"
-            @edit-pressed="showEditModal"
+            @delete-pressed-card="showDeleteModal"
+            @edit-pressed-card="showEditModal"
           />
         </div>
         <div v-else-if="empty">Post by this ID is not found</div>

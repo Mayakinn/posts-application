@@ -54,9 +54,14 @@ onMounted(async () => {
 
     <div v-if="canEdit">
       <footer class="card-footer">
-        <button class="card-footer-item">Edit</button>
         <button
-          @click="console.log('delete clickked')"
+          @click="() => emit('edit-pressed-card', post.id)"
+          class="card-footer-item"
+        >
+          Edit
+        </button>
+        <button
+          @click="() => emit('delete-pressed-card', post.id)"
           class="card-footer-item"
         >
           Delete

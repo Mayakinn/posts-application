@@ -61,6 +61,13 @@ async function handleEditAuthor() {
     cantSubmit.value = true;
   }
 }
+
+watch(
+  () => props.authorId,
+  () => {
+    if (props.authorId != 0) loadData();
+  }
+);
 const isEdited = computed(() => {
   return (
     inputedName.value !== authorData.value?.name ||

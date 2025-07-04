@@ -98,4 +98,61 @@ const deletePost = async (postId: number | string) => {
   }
 };
 
-export { getPosts, getPost, deletePost };
+const editPost = async (
+  postId: number | string,
+  title: string,
+  body: string,
+  createdDate: Date,
+  authorId: number | string
+) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const response = await Axios.put(
+      `${DB_URL}/posts/${postId}`,
+      {
+        id: postId,
+        title: title,
+        body: body,
+        authorId: authorId,
+        userId: auth.userId,
+        created_at: createdDate,
+        updated_at: Date.now(),
+      },
+      config
+    );
+    notif.newNotification("Post edited succesfully", NotificationType.success);
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Post not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Post editing failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
+  }
+};
+
+export { getPosts, getPost, createPost, editPost };
