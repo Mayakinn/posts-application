@@ -155,4 +155,42 @@ const editPost = async (
   }
 };
 
-export { getPosts, getPost, createPost, editPost };
+const deletePost = async (postId: number | string) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+    },
+  };
+  try {
+    const response = await Axios.delete(`${DB_URL}/posts/${postId}`, config);
+    notif.newNotification("Post deleted succesfully", NotificationType.success);
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Author not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Author deletion failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
+  }
+};
+
+export { getPosts, getPost, createPost, editPost, deletePost };

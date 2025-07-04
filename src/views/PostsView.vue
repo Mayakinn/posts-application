@@ -9,6 +9,7 @@ import PostCreateForm from "@/components/formComponents/PostCreateForm.vue";
 import { useAuthStore } from "@/store/AuthStore";
 import FormModal from "@/components/modalComponents/FormModal.vue";
 import PostEditForm from "@/components/formComponents/PostEditForm.vue";
+import PostDeleteForm from "@/components/formComponents/PostDeleteForm.vue";
 
 const loading = ref<boolean>(true);
 const posts = ref<Post[]>([]);
@@ -49,6 +50,12 @@ async function loadData() {
   }
 }
 
+function deleteModal(emit: number | string) {
+  currentForm.value = PostDeleteForm;
+  formModalActive.value = true;
+  postId.value = emit;
+}
+
 function addModal() {
   currentForm.value = PostCreateForm;
   formModalActive.value = true;
@@ -62,6 +69,7 @@ function editModal(emitted: number) {
 
 const closeModal = () => {
   formModalActive.value = false;
+  postId.value = 0;
 };
 
 function closeModalAfterForm(flag: boolean) {
@@ -108,7 +116,11 @@ onMounted(async () => {
     <div v-if="loading" class="title">Loading posts information</div>
     <div v-else-if="empty" class="title">Post list is empty</div>
     <div v-else>
-      <PostList :Posts="posts" @edit-pressed-card="editModal" />
+      <PostList
+        :Posts="posts"
+        @edit-pressed-card="editModal"
+        @delete-pressed-card="deleteModal"
+      />
       <div class="buttons is-centered mx-5 my-3">
         <Pagination
           :currentPage="currentPage"

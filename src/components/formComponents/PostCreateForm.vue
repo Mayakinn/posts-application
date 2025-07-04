@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createAuthor, getAuthorsForDropdown } from "@/api/AuthorService";
+import { getAuthorsForDropdown } from "@/api/AuthorService";
 import { createPost } from "@/api/PostService";
 import type { Author } from "@/typings/interface/Author";
 import { isNumber } from "lodash";
