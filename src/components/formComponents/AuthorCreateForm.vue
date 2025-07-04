@@ -10,6 +10,7 @@ const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
 const emit = defineEmits(["close-pressed"]);
 const flag = ref<boolean>(true);
+const cantSubmit = ref<boolean>(false);
 
 const isInputed = computed(() => {
   return inputedName.value.trim() !== "" && inputedSurname.value.trim() !== "";
@@ -22,18 +23,37 @@ const surnameLettersLimit = computed(() => {
   return inputedSurname.value.trim().length <= 19;
 });
 
-async function handleCreateAuthor() {
-  const response = await createAuthor(
-    inputedName.value.trim(),
-    inputedSurname.value.trim()
-  );
-  if (response == null) {
-    emit("close-pressed", flag.value);
-    return;
+function validateBeforeSubmit() {
+  if (!isInputed.value) {
+    cantSubmit.value = true;
+    return false;
   }
-  inputedName.value = "";
-  inputedSurname.value = "";
-  emit("close-pressed");
+  if (inputedName.value.length >= 21 || inputedSurname.value.length >= 21) {
+    cantSubmit.value = true;
+    return false;
+  }
+  cantSubmit.value = false;
+  return true;
+}
+
+async function handleCreateAuthor() {
+  if (validateBeforeSubmit()) {
+    const response = await createAuthor(
+      inputedName.value.trim(),
+      inputedSurname.value.trim()
+    );
+    if (response == null) {
+      emit("close-pressed", flag.value);
+      cantSubmit.value = false;
+      return;
+    }
+    cantSubmit.value = false;
+    inputedName.value = "";
+    inputedSurname.value = "";
+    emit("close-pressed");
+  } else {
+    cantSubmit.value = true;
+  }
 }
 </script>
 
@@ -72,5 +92,6 @@ async function handleCreateAuthor() {
     </footer>
     <p v-show="!nameLettersLimit">Name is too long. (Max. 20 symbols)</p>
     <p v-show="!surnameLettersLimit">Surname is too long. (Max. 20 symbols)</p>
+    <p v-show="cantSubmit">Can't submit, too many symbols!!!</p>
   </form>
 </template>

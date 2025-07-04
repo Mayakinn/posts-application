@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Axios, { isAxiosError } from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import type { Post } from "@/typings/interface/Post";
@@ -38,7 +38,7 @@ const getPosts = async (
   }
 };
 
-const getPost = async (id: string) => {
+const getPost = async (id: string | number) => {
   const notif = useNotificationStore();
   try {
     const response = await Axios.get(`${DB_URL}/posts/${id}?_expand=author`);
@@ -60,46 +60,42 @@ const getPost = async (id: string) => {
   }
 };
 
-const createPost = async (
-  title: string,
-  body: string,
-  authorId: number | string
-) => {
+const deletePost = async (postId: number | string) => {
   const notif = useNotificationStore();
   const auth = useAuthStore();
 
   let config = {
     headers: {
       Authorization: "Bearer " + auth.jwtToken,
-      "Content-Type": "application/json",
     },
   };
   try {
-    const response = await Axios.post(
-      `${DB_URL}/posts`,
-      {
-        id: uuidv4(),
-        title: title,
-        body: body,
-        authorId: authorId,
-        userId: auth.userId,
-        created_at: Date.now(),
-        updated_at: Date.now(),
-      },
-      config
-    );
-    notif.newNotification(
-      "Author created succesfully",
-      NotificationType.success
-    );
+    const response = await Axios.delete(`${DB_URL}/posts/${postId}`, config);
+    notif.newNotification("Post deleted succesfully", NotificationType.success);
     return response.data;
   } catch (error) {
-    notif.newNotification(
-      `Author creation failed. ${error} `,
-      NotificationType.danger
-    );
-    return;
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Post not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Post deletion failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
   }
 };
 
-export { getPosts, getPost, createPost };
+export { getPosts, getPost, deletePost };

@@ -11,7 +11,7 @@ const inputedName = ref<string>("");
 const inputedSurname = ref<string>("");
 const authorData = ref<Author>();
 const flag = ref<boolean>(true);
-
+const cantSubmit = ref<boolean>(false);
 const emit = defineEmits(["close-pressed"]);
 
 const nameLettersLimit = computed(() => {
@@ -21,23 +21,45 @@ const surnameLettersLimit = computed(() => {
   return inputedSurname.value.length <= 19;
 });
 
-async function handleEditAuthor() {
-  if (authorData.value != null) {
-    const response = await editAuthor(
-      props.authorId,
-      inputedName.value.trim(),
-      inputedSurname.value.trim(),
-      authorData.value.created_at
-    );
-    if (response == null) {
-      emit("close-pressed", flag.value);
-      return;
-    }
+function validateBeforeSubmit() {
+  if (!isInputed.value) {
+    cantSubmit.value = true;
+    return false;
   }
+  if (inputedName.value.length >= 21 || inputedSurname.value.length >= 21) {
+    cantSubmit.value = true;
+    return false;
+  }
+  if (!isEdited.value) {
+    cantSubmit.value = true;
+    return false;
+  }
+  cantSubmit.value = false;
+  return true;
+}
 
-  inputedName.value = "";
-  inputedSurname.value = "";
-  emit("close-pressed");
+async function handleEditAuthor() {
+  if (validateBeforeSubmit()) {
+    if (authorData.value != null) {
+      const response = await editAuthor(
+        props.authorId,
+        inputedName.value.trim(),
+        inputedSurname.value.trim(),
+        authorData.value.created_at
+      );
+      if (response == null) {
+        cantSubmit.value = false;
+        emit("close-pressed", flag.value);
+        return;
+      }
+      cantSubmit.value = false;
+      inputedName.value = "";
+      inputedSurname.value = "";
+      emit("close-pressed");
+    }
+  } else {
+    cantSubmit.value = true;
+  }
 }
 const isEdited = computed(() => {
   return (
@@ -113,5 +135,6 @@ onMounted(async () => {
     <p v-show="!surnameLettersLimit">
       Surname symbol limit reached (Max. 20 symbols).
     </p>
+    <p v-show="cantSubmit">Can't submit, too many symbols!!!</p>
   </form>
 </template>

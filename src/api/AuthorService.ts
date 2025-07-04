@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Axios, { isAxiosError } from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import type { Author } from "@/typings/interface/Author";
@@ -90,12 +90,27 @@ const deleteAuthor = async (authorId: number | string) => {
     );
     return response.data;
   } catch (error) {
-    notif.newNotification(
-      `Author deletion failed. ${error} `,
-      NotificationType.danger
-    );
-
-    return;
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Author not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Author deletion failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
   }
 };
 
@@ -168,11 +183,27 @@ const editAuthor = async (
     );
     return response.data;
   } catch (error) {
-    notif.newNotification(
-      `Author changes failed. ${error} `,
-      NotificationType.danger
-    );
-    return;
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Author not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Author editing failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
   }
 };
 

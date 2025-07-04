@@ -14,9 +14,7 @@ const isPostRoute = ref(false);
 const router = useRouter();
 const route = useRoute();
 
-const emit = defineEmits(["delete-pressed", "edit-pressed"]);
-
-const canEdit = computed(() => auth.jwtToken != undefined);
+const canEdit = computed(() => auth.jwtToken);
 
 const createdOrUpdatedDate = computed(() => {
   return new Date(props.post.created_at) >= new Date(props.post.updated_at)
@@ -30,11 +28,14 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div
-    class="card"
-    @click="router.push({ name: 'post', params: { id: post.id } })"
-  >
-    <header class="card-header">
+  <div class="card">
+    <header
+      class="card-header"
+      @click="
+        router.push({ name: 'post', params: { id: post.id } });
+        console.log('cardclicked');
+      "
+    >
       <p class="card-header-title">{{ post.title }}</p>
     </header>
     <div class="card-content">
