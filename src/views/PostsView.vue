@@ -61,22 +61,24 @@ function addModal() {
   formModalActive.value = true;
 }
 
+function editModal(emitted: number) {
+  currentForm.value = PostEditForm;
+  postId.value = emitted;
+  formModalActive.value = true;
+}
+
 const closeModal = () => {
   formModalActive.value = false;
   postId.value = 0;
 };
 
-function editModal(emit: number | string) {
-  currentForm.value = PostEditForm;
-  formModalActive.value = true;
-  postId.value = emit;
-}
-
-const closeModalAfterForm = async () => {
+function closeModalAfterForm(flag: boolean) {
   formModalActive.value = false;
   postId.value = 0;
-  await loadData();
-};
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 function onSearch(newQuery: string) {
   searchQuery.value = newQuery;

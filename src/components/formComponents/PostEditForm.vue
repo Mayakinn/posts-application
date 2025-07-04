@@ -11,16 +11,24 @@ const inputedTitle = ref("");
 const inputedBody = ref("");
 const loading = ref<boolean>(true);
 const emit = defineEmits(["close-pressed"]);
+const flag = ref<boolean>(true);
 
 async function handleEditPost() {
-  if (postData.value != null)
-    await editPost(
+  if (postData.value != null) {
+    const response = await editPost(
       props.postId,
       inputedTitle.value.trim(),
       inputedBody.value.trim(),
       postData.value.created_at,
       postData.value.authorId
     );
+    if (response == null) {
+      inputedTitle.value = "";
+      inputedBody.value = "";
+      emit("close-pressed", flag);
+      return;
+    }
+  }
   inputedTitle.value = "";
   inputedBody.value = "";
   emit("close-pressed");
@@ -33,6 +41,12 @@ watch(
   }
 );
 
+const titleLettersLimit = computed(() => {
+  return inputedTitle.value.trim().length <= 49;
+});
+const bodyLettersLimit = computed(() => {
+  return inputedBody.value.trim().length <= 499;
+});
 const isEdited = computed(() => {
   return (
     inputedTitle.value !== postData.value?.title ||
@@ -40,6 +54,9 @@ const isEdited = computed(() => {
   );
 });
 
+const isInputed = computed(() => {
+  return inputedTitle.value.trim() !== "" && inputedBody.value.trim() !== "";
+});
 async function loadData() {
   loading.value = true;
   postData.value = await getPost(props.postId).then();
@@ -69,6 +86,7 @@ onMounted(async () => {
         type="text"
         class="input is-primary is-rounded"
         required
+        maxlength="50"
         style="max-width: 1000px"
       />
       Post body:
@@ -77,6 +95,7 @@ onMounted(async () => {
         v-model="inputedBody"
         type="text"
         required
+        maxlength="500"
         style="max-width: 1000px"
       ></textarea>
       <br />
@@ -86,8 +105,14 @@ onMounted(async () => {
         class="button"
         type="submit"
         value="Submit"
-        :disabled="!isEdited"
+        :disabled="!isEdited || !isInputed"
       />
     </footer>
+    <p v-show="!titleLettersLimit">
+      Title length limit reached. (Max. 60 symbols)
+    </p>
+    <p v-show="!bodyLettersLimit">
+      Post body length limit reached. (Max. 500 symbols)
+    </p>
   </form>
 </template>

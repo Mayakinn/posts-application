@@ -5,6 +5,7 @@ import type { Author } from "@/typings/interface/Author";
 import { useAuthStore } from "@/store/AuthStore";
 import { uniqueId } from "lodash";
 import { v4 as uuidv4 } from "uuid";
+import { ref } from "vue";
 
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
@@ -73,7 +74,6 @@ const getAuthorsForDropdown = async (): Promise<Author[]> => {
 const deleteAuthor = async (authorId: number | string) => {
   const notif = useNotificationStore();
   const auth = useAuthStore();
-
   let config = {
     headers: {
       Authorization: "Bearer " + auth.jwtToken,
@@ -91,10 +91,9 @@ const deleteAuthor = async (authorId: number | string) => {
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Author deletion failed. User unauthorized or session has ended. ${error} `,
+      `Author deletion failed. ${error} `,
       NotificationType.danger
     );
-    auth.logOutUser();
 
     return;
   }
@@ -129,10 +128,9 @@ const createAuthor = async (name: string, surname: string) => {
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Author creation failed. User unauthorized or session has ended. ${error} `,
+      `Author creation failed. ${error} `,
       NotificationType.danger
     );
-    auth.logOutUser();
     return;
   }
 };
@@ -171,7 +169,7 @@ const editAuthor = async (
     return response.data;
   } catch (error) {
     notif.newNotification(
-      `Author changes failed. User unauthorized or session has ended. ${error} `,
+      `Author changes failed. ${error} `,
       NotificationType.danger
     );
     return;

@@ -80,11 +80,13 @@ const closeModal = () => {
   formModalActive.value = false;
   authorId.value = 0;
 };
-const closeModalAfterForm = async () => {
+function closeModalAfterForm(flag: boolean) {
   formModalActive.value = false;
   authorId.value = 0;
-  await loadData();
-};
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 watch([searchQuery, currentPage], loadData);
 

@@ -43,15 +43,13 @@ const showEditModal = (emit: number | string) => {
   formModalActive.value = !formModalActive.value;
 };
 
-const closeModalAfterForm = () => {
+function closeModalAfterForm(flag: boolean) {
   formModalActive.value = false;
   postId.value = 0;
-  if (currentForm.value == PostDeleteForm) {
-    router.push("/");
-  } else {
-    loadData();
-  }
-};
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 const closeModal = () => {
   formModalActive.value = false;
@@ -74,8 +72,8 @@ onMounted(async () => {
         :postId="postId"
       ></component>
     </FormModal>
-    <div style="max-width: 1000px; margin: 0 auto" class="columns">
-      <div class="is-full">
+    <div class="container" style="max-width: 1000px; margin: 0 auto">
+      <div class="column is-full">
         <div v-if="singlePost" :id="singlePost.id.toString()">
           <PostCard
             :post="singlePost"
