@@ -15,6 +15,7 @@ const selectedAuthor = ref<Author>();
 const authorList = ref<Author[]>();
 const emit = defineEmits(["close-pressed"]);
 const flag = ref<boolean>(true);
+const cantSubmit = ref<boolean>(false);
 
 const isInputed = computed(() => {
   return inputedTitle.value.trim() !== "" && inputedBody.value.trim() !== "";
@@ -27,25 +28,45 @@ const bodyLettersLimit = computed(() => {
   return inputedBody.value.trim().length <= 499;
 });
 
-async function handleCreatePost() {
-  if (selectedAuthor.value?.id != null) {
-    const response = await createPost(
-      inputedTitle.value.trim(),
-      inputedBody.value.trim(),
-      selectedAuthor.value?.id
-    );
-    if (response == null) {
-      inputedTitle.value = "";
-      inputedBody.value = "";
-      selectedAuthor.value = undefined;
-      emit("close-pressed", flag);
-      return;
-    }
+function validateBeforeSubmit() {
+  if (!isInputed.value) {
+    cantSubmit.value = true;
+    return false;
   }
-  inputedTitle.value = "";
-  inputedBody.value = "";
-  selectedAuthor.value = undefined;
-  emit("close-pressed");
+  if (inputedTitle.value.length >= 21 || inputedBody.value.length >= 501) {
+    cantSubmit.value = true;
+    return false;
+  }
+  cantSubmit.value = false;
+  return true;
+}
+
+async function handleCreatePost() {
+  if (validateBeforeSubmit()) {
+    if (selectedAuthor.value?.id != null) {
+      const response = await createPost(
+        inputedTitle.value.trim(),
+        inputedBody.value.trim(),
+        selectedAuthor.value?.id
+      );
+      if (response == null) {
+        inputedTitle.value = "";
+        inputedBody.value = "";
+        selectedAuthor.value = undefined;
+        cantSubmit.value = false;
+
+        emit("close-pressed", flag);
+        return;
+      }
+    }
+    cantSubmit.value = false;
+    inputedTitle.value = "";
+    inputedBody.value = "";
+    selectedAuthor.value = undefined;
+    emit("close-pressed");
+  } else {
+    cantSubmit.value = true;
+  }
 }
 
 async function loadAuthors() {
@@ -105,5 +126,6 @@ onMounted(async () => {
     <p v-show="!bodyLettersLimit">
       Post body length limit reached. (Max. 500 symbols)
     </p>
+    <p v-show="cantSubmit">Can't submit, too many symbols!!!</p>
   </form>
 </template>

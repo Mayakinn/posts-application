@@ -9,12 +9,28 @@
   ],
   "authors": [
     {
-      "id": 1,
-      "name": "John",
-      "surname": "Doe",
+      "id": 2,
+      "name": "Jane",
+      "surname": "Smith",
       "userId": 1,
       "created_at": "2024-05-05T12:00:00Z",
       "updated_at": "2024-05-05T12:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Michael",
+      "surname": "Johnson",
+      "userId": 1,
+      "created_at": "2024-05-05T12:00:00Z",
+      "updated_at": "2024-05-05T12:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Emily",
+      "surname": "Brown",
+      "userId": 1,
+      "created_at": "2024-05-05T12:00:00Z",
+      "updated_at": 1751624403383
     },
     {
       "id": 2,
@@ -23,9 +39,149 @@
       "userId": 1,
       "created_at": "2024-05-05T12:00:00Z",
       "updated_at": "2024-05-05T12:00:00Z"
+    },
+    {
+      "id": "79b9c2d0-c5d2-499f-9f16-4b350abcd2f4",
+      "name": "dfsfsf",
+      "surname": "sdfsf",
+      "created_at": 1751449998938,
+      "updated_at": 1751449998938
     }
   ],
   "posts": [
+    {
+      "id": 2,
+      "title": "Second Post",
+      "body": "This is the body of the second post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 2,
+      "userId": 1,
+      "created_at": "2024-05-05T12:01:00Z",
+      "updated_at": "2024-05-05T12:01:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Third Post",
+      "body": "This is the body of the third post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 3,
+      "userId": 1,
+      "created_at": "2024-05-05T12:02:00Z",
+      "updated_at": "2024-05-05T12:02:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Fourth Post",
+      "body": "This is the body of the fourth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 4,
+      "userId": 1,
+      "created_at": "2024-05-05T12:00:00Z",
+      "updated_at": "2024-05-05T12:00:00Z"
+    },
+    {
+      "id": 7,
+      "title": "Seventh Post",
+      "body": "This is the body of the seventh post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 2,
+      "userId": 1,
+      "created_at": "2024-05-05T12:06:00Z",
+      "updated_at": "2024-05-05T12:06:00Z"
+    },
+    {
+      "id": 8,
+      "title": "Eighth Post",
+      "body": "This is the body of the eighth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 3,
+      "userId": 1,
+      "created_at": "2024-05-05T12:07:00Z",
+      "updated_at": "2024-05-05T12:07:00Z"
+    },
+    {
+      "id": 9,
+      "title": "Ninth Post",
+      "body": "This is the body of the ninth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 4,
+      "userId": 1,
+      "created_at": "2024-05-05T12:01:00Z",
+      "updated_at": "2024-05-05T12:01:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Third Post",
+      "body": "This is the body of the third post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 3,
+      "userId": 1,
+      "created_at": "2024-05-05T12:02:00Z",
+      "updated_at": "2024-05-05T12:02:00Z"
+    },
+    {
+      "id": 6,
+      "title": "Sixth Post",
+      "body": "This is the body of the sixth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 1,
+      "userId": 1,
+      "created_at": "2024-05-05T12:05:00Z",
+      "updated_at": "2024-05-05T12:05:00Z"
+    },
+    {
+      "id": 7,
+      "title": "Seventh Post",
+      "body": "This is the body of the seventh post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 2,
+      "userId": 1,
+      "created_at": "2024-05-05T12:06:00Z",
+      "updated_at": "2024-05-05T12:06:00Z"
+    },
+    {
+      "id": 8,
+      "title": "Eighth Post",
+      "body": "This is the body of the eighth post. It contains more than twenty five words to fulfill the requirement of the task. This is just a filler text to meet the criteria.",
+      "authorId": 3,
+      "userId": 1,
+      "created_at": "2024-05-05T12:07:00Z",
+      "updated_at": "2024-05-05T12:07:00Z"
+    },
+    {
+      "title": "New post for testing",
+      "body": "Testing text. Random text to make up the word count. This post is being generated for the purpose of testing. It fulfills the requirement of having at least twenty five words in the body field.",
+      "authorId": 1,
+      "userId": 1,
+      "created_at": "2024-05-05T17:14:15Z",
+      "updated_at": "2024-05-05T17:14:15Z",
+      "id": 10
+    },
+    {
+      "id": "aea52471-06e6-46da-abcf-f538716557a1",
+      "title": "Now this is epic",
+      "body": "g[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisbpdbnpbngbipnbg[pisb",
+      "authorId": 2,
+      "userId": "1",
+      "created_at": 1751604851551,
+      "updated_at": 1751604851551
+    },
+    {
+      "id": "be107f78-116c-4bd1-a447-4894acf23caa",
+      "title": "a lot of enters",
+      "body": "eafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf\neafdspf",
+      "authorId": 2,
+      "userId": "1",
+      "created_at": 1751605680542,
+      "updated_at": 1751605680542
+    },
+    {
+      "id": "21a49bfb-1d8c-4e7d-9f19-e42508bbceb6",
+      "title": "hello there",
+      "body": "dasdad",
+      "authorId": 4,
+      "created_at": 1751607523439,
+      "updated_at": 1751607523439
+    },
+    {
+      "id": "e7e36c48-1be8-4501-9f12-d72c67fd45ce",
+      "title": "fsdfsdfsfd",
+      "body": "sfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdfsdfsdfsdfsdfdsfsfdf",
+      "authorId": 2,
+      "created_at": 1751607961024,
+      "updated_at": 1751607961024
+    },
     {
       "id": "c957ad17-ac2a-4bea-a9a7-eaf612ece059",
       "title": "dfsdfsdf",
@@ -33,6 +189,33 @@
       "authorId": 2,
       "created_at": 1751607985210,
       "updated_at": 1751607985210
+    },
+    {
+      "id": "33f3d1fb-54c8-4b44-a2eb-6480bc5ca700",
+      "title": "asdasdsdasda",
+      "body": "asdasdasdadsdasd",
+      "authorId": 3,
+      "userId": "1",
+      "created_at": 1751623690899,
+      "updated_at": 1751623690899
+    },
+    {
+      "id": "d172dbe6-5751-436f-9cdb-dbb8fd7bd099",
+      "title": "TITLE LONG",
+      "body": "ye",
+      "authorId": 2,
+      "userId": "1",
+      "created_at": 1751623751647,
+      "updated_at": 1751623751647
+    },
+    {
+      "id": "b538277e-a7b4-4098-ac3f-1dd8c66aca75",
+      "title": "fsfdf",
+      "body": "sfdsdfsdf",
+      "authorId": 2,
+      "userId": "1",
+      "created_at": 1751623857808,
+      "updated_at": 1751623857808
     }
   ]
 }
