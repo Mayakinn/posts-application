@@ -23,21 +23,37 @@ const surnameLettersLimit = computed(() => {
   return inputedSurname.value.trim().length <= 19;
 });
 
+function validateBeforeSubmit() {
+  if (!isInputed.value) {
+    cantSubmit.value = true;
+    return false;
+  }
+  if (inputedName.value.length >= 21 || inputedSurname.value.length >= 21) {
+    cantSubmit.value = true;
+    return false;
+  }
+  cantSubmit.value = false;
+  return true;
+}
+
 async function handleCreateAuthor() {
-  if (!nameLettersLimit || !surnameLettersLimit || !isInputed) {
+  if (validateBeforeSubmit()) {
     const response = await createAuthor(
       inputedName.value.trim(),
       inputedSurname.value.trim()
     );
     if (response == null) {
       emit("close-pressed", flag.value);
+      cantSubmit.value = false;
       return;
     }
+    cantSubmit.value = false;
     inputedName.value = "";
     inputedSurname.value = "";
     emit("close-pressed");
+  } else {
+    cantSubmit.value = true;
   }
-  cantSubmit.value = true;
 }
 </script>
 
@@ -74,12 +90,8 @@ async function handleCreateAuthor() {
         :disabled="!isInputed"
       />
     </footer>
-    <p v-show="!nameLettersLimit">
-      Name symbol limit has been reached (Max. 20 symbols).
-    </p>
-    <p v-show="!surnameLettersLimit">
-      Surname symbol limit has been reached (Max. 20 symbols).
-    </p>
+    <p v-show="!nameLettersLimit">Name is too long. (Max. 20 symbols)</p>
+    <p v-show="!surnameLettersLimit">Surname is too long. (Max. 20 symbols)</p>
     <p v-show="cantSubmit">Can't submit, too many symbols!!!</p>
   </form>
 </template>
