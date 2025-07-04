@@ -70,7 +70,11 @@ async function handleCreateAuthor() {
         :disabled="!isInputed"
       />
     </footer>
-    <p v-show="!nameLettersLimit">Name is too long. (Max. 20 symbols)</p>
-    <p v-show="!surnameLettersLimit">Surname is too long. (Max. 20 symbols)</p>
+    <p v-show="!nameLettersLimit">
+      Name symbol limit has been reached (Max. 20 symbols).
+    </p>
+    <p v-show="!surnameLettersLimit">
+      Surname symbol limit has been reached (Max. 20 symbols).
+    </p>
   </form>
 </template>
