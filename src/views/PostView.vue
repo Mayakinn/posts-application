@@ -43,11 +43,13 @@ const showEditModal = (emit: number | string) => {
   formModalActive.value = !formModalActive.value;
 };
 
-const closeModalAfterForm = () => {
+function closeModalAfterForm(flag: boolean) {
   formModalActive.value = false;
   postId.value = 0;
-  loadData();
-};
+  if (flag) {
+    return;
+  } else loadData();
+}
 
 const closeModal = () => {
   formModalActive.value = false;

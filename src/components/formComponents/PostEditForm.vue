@@ -41,6 +41,12 @@ watch(
   }
 );
 
+const titleLettersLimit = computed(() => {
+  return inputedTitle.value.trim().length <= 49;
+});
+const bodyLettersLimit = computed(() => {
+  return inputedBody.value.trim().length <= 499;
+});
 const isEdited = computed(() => {
   return (
     inputedTitle.value !== postData.value?.title ||
@@ -80,6 +86,7 @@ onMounted(async () => {
         type="text"
         class="input is-primary is-rounded"
         required
+        maxlength="50"
         style="max-width: 1000px"
       />
       Post body:
@@ -88,6 +95,7 @@ onMounted(async () => {
         v-model="inputedBody"
         type="text"
         required
+        maxlength="500"
         style="max-width: 1000px"
       ></textarea>
       <br />
@@ -100,5 +108,11 @@ onMounted(async () => {
         :disabled="!isEdited || !isInputed"
       />
     </footer>
+    <p v-show="!titleLettersLimit">
+      Title length limit reached. (Max. 60 symbols)
+    </p>
+    <p v-show="!bodyLettersLimit">
+      Post body length limit reached. (Max. 500 symbols)
+    </p>
   </form>
 </template>
