@@ -66,12 +66,27 @@ const deleteAuthor = async (authorId: number | string) => {
     );
     return response.data;
   } catch (error) {
-    notif.newNotification(
-      `Author deletion failed. ${error} `,
-      NotificationType.danger
-    );
-
-    return;
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Author not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Author deletion failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
   }
 };
 

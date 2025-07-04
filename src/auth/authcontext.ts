@@ -26,10 +26,10 @@ const login = async (email: string, pass: string) => {
   } catch (error) {
     if (Axios.isAxiosError(error)) {
       notif.newNotification(
-        `Error: ${error.response?.data?.message || error.message}`,
+        `Error: ${error.response?.data?.message || error.message}. Invalid email and/or password.`,
         NotificationType.danger
       );
-    } else notif.newNotification(`Error : ${error}`, NotificationType.danger);
+    }
   }
 };
 

@@ -1,7 +1,9 @@
-import Axios from "axios";
+import Axios, { isAxiosError } from "axios";
 import { useNotificationStore } from "@/store/NotificationStore";
 import { NotificationType } from "@/typings/interface/NotificationType";
 import type { Post } from "@/typings/interface/Post";
+import { useAuthStore } from "@/store/AuthStore";
+import { v4 as uuidv4 } from "uuid";
 
 const DB_URL = import.meta.env.VITE_JSON_SERVER;
 
@@ -36,7 +38,7 @@ const getPosts = async (
   }
 };
 
-const getPost = async (id: string) => {
+const getPost = async (id: string | number) => {
   const notif = useNotificationStore();
   try {
     const response = await Axios.get(`${DB_URL}/posts/${id}?_expand=author`);
@@ -58,4 +60,42 @@ const getPost = async (id: string) => {
   }
 };
 
-export { getPosts, getPost };
+const deletePost = async (postId: number | string) => {
+  const notif = useNotificationStore();
+  const auth = useAuthStore();
+
+  let config = {
+    headers: {
+      Authorization: "Bearer " + auth.jwtToken,
+    },
+  };
+  try {
+    const response = await Axios.delete(`${DB_URL}/posts/${postId}`, config);
+    notif.newNotification("Post deleted succesfully", NotificationType.success);
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      if (error.status == 404) {
+        notif.newNotification(
+          `Post not Found: ${error.status} `,
+          NotificationType.danger
+        );
+        return Response.error;
+      } else {
+        notif.newNotification(
+          `Network error: ${error.code}`,
+          NotificationType.danger
+        );
+        return;
+      }
+    } else {
+      notif.newNotification(
+        `Post deletion failed. ${error} `,
+        NotificationType.danger
+      );
+      return Response.error;
+    }
+  }
+};
+
+export { getPosts, getPost, deletePost };
