@@ -1,11 +1,12 @@
-interface Post {
-    id: number;
-    title: string;
-    body: string;
-    authorId: number;
-    userId: number;
-    created_at: Date;
-    updated_at: Date;
-}
+import type { Author } from "./Author";
 
-export default Post;
+export interface Post {
+  id: number | string;
+  title: string;
+  body: string;
+  authorId: number;
+  userId: number;
+  created_at: Date;
+  updated_at: Date;
+  author: Author;
+}
