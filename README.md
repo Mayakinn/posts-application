@@ -1,39 +1,28 @@
-# FirstTask
+# Posts application
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue.js + Typescript website for managing posts and authors
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+* Adding new posts and assigning and author
+* Editing and deleting posts
+* Adding new authors
+* Editing and deleting authors
 
-## Type Support for `.vue` Imports in TS
+## How to run it
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+Copy the variables from .env.example to your own .env file and fill them with your own values.
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
+### Frontend
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
-
+### Backend
 ```sh
-npm run build
+npm install -g json-server json-server-auth
+json-server-auth db.json -r routes.json
 ```
+use `http://127.0.0.1:8080` to access the website
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
